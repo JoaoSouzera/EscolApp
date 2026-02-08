@@ -8,9 +8,9 @@ public class Conexao {
         String user = System.getenv("DB_USER");
         String password = System.getenv("DB_PASSWORD");
         Connection conn = null;
-        try{
+        try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(url,user,password);
+            conn = DriverManager.getConnection(url, user, password);
         }
         catch (ClassNotFoundException e){
             e.printStackTrace();
