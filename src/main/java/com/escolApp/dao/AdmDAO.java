@@ -1,25 +1,25 @@
 package com.escolApp.dao;
 
 import com.escolApp.conexao.Conexao;
+import com.escolApp.model.Adm;
 import com.escolApp.model.Nota;
-import com.escolApp.model.Professor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotaDAO {
+public class AdmDAO {
+
     // CREATE
-    public boolean inserirNota(Nota nota){
+    public boolean inserirAdm(Adm adm){
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO NOTA "+
-                    "(N1,N2,ID_ALUNO,ID_DISCIPLINA) VALUES (?,?,?,?)");
-            pstmt.setDouble(1,nota.getN1());
-            pstmt.setDouble(2,nota.getN2());
-            pstmt.setInt(3,nota.getIdAluno());
-            pstmt.setInt(4,nota.getIdDisciplina());
+            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO ADM "+
+                    "(USERNAME,EMAIL,SENHA) VALUES (?,?,?)");
+            pstmt.setString(1, adm.getUsername());
+            pstmt.setString(2, adm.getEmail());
+            pstmt.setString(3,adm.getSenha());
             if (pstmt.executeUpdate() > 0){
                 return true;
             }
@@ -35,19 +35,19 @@ public class NotaDAO {
     }
 
     // READ
-    public List<Nota> buscarNota(){
+
+    public List<Adm> buscarAdm(){
         Conexao conexao = new Conexao();
-        List<Nota> notas = new ArrayList<>();
+        List<Adm> lista = new ArrayList<>();
         try {
             Connection conn = conexao.conectar();
             Statement stmt = conn.createStatement();
-            ResultSet rset = stmt.executeQuery("SELECT * FROM NOTA");
+            ResultSet rset = stmt.executeQuery("SELECT * FROM ADM");
             while (rset.next()){
-                notas.add(new Nota(rset.getInt("ID"),rset.getDouble("N1"),
-                        rset.getDouble("N2"),rset.getInt("ID_ALUNO"),
-                        rset.getInt("ID_DISCIPLINA")));
+                lista.add(new Adm(rset.getInt("ID"),rset.getString("USERNAME"),
+                        rset.getString("EMAIL"),rset.getString("SENHA")));
             }
-            return notas;
+            return lista;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -57,12 +57,13 @@ public class NotaDAO {
     }
 
     // UPDATE
-    public boolean atualizarN1(int num, double n1){
+
+    public boolean atualizarUsername(int num, String username){
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE NOTA SET N1 = ? WHERE ID = ?");
-            pstmt.setDouble(1, n1);
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET USERNAME = ? WHERE ID = ?");
+            pstmt.setString(1,username);
             pstmt.setInt(2, num);
             if (pstmt.executeUpdate() > 0) {
                 return true;
@@ -76,14 +77,12 @@ public class NotaDAO {
             conexao.desconectar(conexao.conectar());
         }
     }
-
-    // UPDATE
-    public boolean atualizarN2(int num, double n2){
+    public boolean atualizarEmail(int num, String email){
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE NOTA SET N2 = ? WHERE ID = ?");
-            pstmt.setDouble(1, n2);
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET EMAIL = ? WHERE ID = ?");
+            pstmt.setString(1,email);
             pstmt.setInt(2, num);
             if (pstmt.executeUpdate() > 0) {
                 return true;
@@ -97,13 +96,31 @@ public class NotaDAO {
             conexao.desconectar(conexao.conectar());
         }
     }
-
+    public boolean atualizarSenha(int num, String senha){
+        Conexao conexao = new Conexao();
+        try{
+            Connection conn = conexao.conectar();
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET SENHA = ? WHERE ID = ?");
+            pstmt.setString(1,senha);
+            pstmt.setInt(2, num);
+            if (pstmt.executeUpdate() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }finally {
+            conexao.desconectar(conexao.conectar());
+        }
+    }
     // DELETE
-    public boolean removerNota(int num){
+    public boolean removerAdm(int num){
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
-            String remover = "DELETE FROM NOTA WHERE ID = ?";
+            String remover = "DELETE FROM ADM WHERE ID = ?";
             PreparedStatement pstmt = conn.prepareStatement(remover);
             pstmt.setInt(1,num);
             if (pstmt.executeUpdate() > 0){

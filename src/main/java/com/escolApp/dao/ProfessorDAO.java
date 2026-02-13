@@ -14,13 +14,12 @@ public class ProfessorDAO {
         try{
             Connection conn = conexao.conectar();
             PreparedStatement pstmt = conn.prepareStatement("INSERT INTO PROFESSOR "+
-                    "(ID,NOME,USERNAME,EMAIL,SENHA,ID_DISCIPLINA) VALUES (?,?,?,?,?,?)");
-            pstmt.setInt(1,prof.getId());
-            pstmt.setString(2, prof.getNome());
-            pstmt.setString(3, prof.getUsername());
-            pstmt.setString(4, prof.getEmail());
-            pstmt.setString(5, prof.getSenha());
-            pstmt.setInt(6,prof.getIdDisciplina());
+                    "(NOME,USERNAME,EMAIL,SENHA,ID_DISCIPLINA) VALUES (?,?,?,?,?)");
+            pstmt.setString(1, prof.getNome());
+            pstmt.setString(2, prof.getUsername());
+            pstmt.setString(3, prof.getEmail());
+            pstmt.setString(4, prof.getSenha());
+            pstmt.setInt(5,prof.getIdDisciplina());
             if (pstmt.executeUpdate() > 0){
                 return true;
             }
