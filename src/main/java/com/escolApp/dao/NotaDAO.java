@@ -48,6 +48,7 @@ public class NotaDAO {
                         rset.getDouble("N2"),rset.getInt("ID_ALUNO"),
                         rset.getInt("ID_DISCIPLINA")));
             }
+            return notas;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {

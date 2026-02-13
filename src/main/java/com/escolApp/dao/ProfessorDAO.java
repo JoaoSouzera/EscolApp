@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProfessorDAO {
     // CREATE
-    public boolean inserirProfessor(Professor prof){
+    public boolean inserirProfessor(Professor prof){ // TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
@@ -35,11 +35,11 @@ public class ProfessorDAO {
         }
     }
     // READ
-    public List<Professor> buscarProfessores(){
+    public List<Professor> buscarProfessores(){ // TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
         List<Professor> lista = new ArrayList<>();
         try{
-            Connection conn = conexao.conectar();
             Statement stmt = conn.createStatement();
             ResultSet rset = stmt.executeQuery("SELECT * FROM PROFESSOR");
             while (rset.next()){
@@ -47,6 +47,7 @@ public class ProfessorDAO {
                         rset.getString("USERNAME"),rset.getString("EMAIL"),
                         rset.getString("SENHA"),rset.getInt("ID_DISCIPLINA")));
             }
+            return lista;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -55,7 +56,7 @@ public class ProfessorDAO {
         return null;
     }
     // UPDATE
-    public boolean alterarSenha (int num, String senha){
+    public boolean alterarSenha (int num, String senha){ //TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
@@ -75,7 +76,7 @@ public class ProfessorDAO {
         }
     }
     // DELETE
-    public boolean removerProfessor(int num){
+    public boolean removerProfessor(int num){ // TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.conectar();
