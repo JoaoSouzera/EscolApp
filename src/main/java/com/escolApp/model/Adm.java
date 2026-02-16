@@ -8,13 +8,18 @@ public class Adm {
 
     // CONSTRUTOR
 
+    public Adm(String username, String email, String senha) {
+        this.username = username;
+        this.email = email;
+        this.senha = senha;
+    }
+
     public Adm(int id, String username, String email, String senha) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.senha = senha;
     }
-
     // GETTER
 
     public int getId() {

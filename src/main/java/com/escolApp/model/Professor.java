@@ -18,6 +18,13 @@ public class Professor {
         this.idDisciplina = idDisciplina;
     }
 
+    public Professor(String nome, String username, String email, String senha, int idDisciplina) {
+        this.nome = nome;
+        this.username = username;
+        this.email = email;
+        this.senha = senha;
+        this.idDisciplina = idDisciplina;
+    }
     // GETTER
 
     public int getId() {

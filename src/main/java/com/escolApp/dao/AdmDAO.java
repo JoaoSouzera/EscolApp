@@ -13,9 +13,11 @@ public class AdmDAO {
     // CREATE
     public boolean inserirAdm(Adm adm){
         Conexao conexao = new Conexao();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
         try{
-            Connection conn = conexao.conectar();
-            PreparedStatement pstmt = conn.prepareStatement("INSERT INTO ADM "+
+            conn = conexao.conectar();
+            pstmt = conn.prepareStatement("INSERT INTO ADM "+
                     "(USERNAME,EMAIL,SENHA) VALUES (?,?,?)");
             pstmt.setString(1, adm.getUsername());
             pstmt.setString(2, adm.getEmail());
@@ -54,6 +56,28 @@ public class AdmDAO {
             conexao.desconectar(conexao.conectar());
         }
         return null;
+    }
+
+    public Adm buscarPorId(int id) {
+        Conexao conexao = new Conexao();
+        Adm adm = null;
+        String sql = "SELECT * FROM adm WHERE id = ?";
+        Connection conn = conexao.conectar();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                adm = new Adm(rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("senha"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return adm;
     }
 
     // UPDATE
@@ -136,4 +160,39 @@ public class AdmDAO {
             conexao.desconectar(conexao.conectar());
         }
     }
+
+
+    // AUTENTICAR
+    public Adm autenticar(String username, String senha) {
+        Conexao conexao = new Conexao();
+        Adm adm = null;
+
+        String sql = "SELECT * FROM adm WHERE username = ? AND senha = ?";
+
+        try (
+                Connection conn = conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, senha);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                adm = new Adm(
+                        rs.getInt("id"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("senha")
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return adm;
+    }
+
 }
