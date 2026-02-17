@@ -84,8 +84,9 @@ public class AdmDAO {
 
     public boolean atualizarUsername(int num, String username){
         Conexao conexao = new Conexao();
+        Connection conn = null;
         try{
-            Connection conn = conexao.conectar();
+            conn = conexao.conectar();
             PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET USERNAME = ? WHERE ID = ?");
             pstmt.setString(1,username);
             pstmt.setInt(2, num);
@@ -98,7 +99,7 @@ public class AdmDAO {
             e.printStackTrace();
             return false;
         }finally {
-            conexao.desconectar(conexao.conectar());
+            conexao.desconectar(conn);
         }
     }
     public boolean atualizarEmail(int num, String email){

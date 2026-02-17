@@ -83,23 +83,47 @@
         <th>ID</th>
         <th>Username</th>
         <th>Email</th>
-        <th>Ações</th>
+        <th>Senha</th>
+        <th>Edição</th>
+        <th>Excluir</th>
     </tr>
 
     <%
         for (Adm adm : lista) {
     %>
     <tr>
-        <td><%= adm.getId() %></td>
-        <td><%= adm.getUsername() %></td>
-        <td><%= adm.getEmail() %></td>
+        <form action="${pageContext.request.contextPath}/adm" method="post">
+            <td>
+                <%= adm.getId() %>
+                <input type="hidden" name="id" value="<%= adm.getId() %>">
+            </td>
+
+            <td>
+                <input type="text" name="username" value="<%= adm.getUsername() %>">
+            </td>
+
+            <td>
+                <input type="email" name="email" value="<%= adm.getEmail() %>">
+            </td>
+
+            <td>
+                <input type="password" name="senha" placeholder="Nova senha">
+            </td>
+
+            <td>
+                <input type="hidden" name="acao" value="editar">
+                <button type="submit">💾 Salvar</button>
+            </td>
+        </form>
         <td>
-            <a href="${pageContext.request.contextPath}/adm?acao=editar&id=<%= adm.getId() %>">✏️ Editar</a>
-            |
-            <a href="${pageContext.request.contextPath}/adm?acao=remover&id=<%= adm.getId() %>"
-               onclick="return confirm('Deseja remover este administrador?')">
-                🗑️ Remover
-            </a>
+        <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
+            <input type="hidden" name="acao" value="remover">
+            <input type="hidden" name="id" value="<%= adm.getId() %>">
+            <button type="submit"
+                    onclick="return confirm('Tem certeza que deseja excluir?')">
+                🗑️ Excluir
+            </button>
+        </form>
         </td>
     </tr>
     <%
@@ -143,8 +167,8 @@
         <td>
             <a href="${pageContext.request.contextPath}/adm?acao=editar&id=<%= prof.getId() %>">✏️ Editar</a>
             |
-            <a href="${pageContext.request.contextPath}/adm?acao=remover&id=<%= prof.getId() %>"
-               onclick="return confirm('Deseja remover este administrador?')">
+            <a href="${pageContext.request.contextPath}/adm?acao=remover&idProf=<%= prof.getId() %>"
+               onclick="return confirm('Deseja remover este professor?')">
                 🗑️ Remover
             </a>
         </td>

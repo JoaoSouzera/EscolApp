@@ -104,12 +104,16 @@ public class AdmServlet extends HttpServlet {
     private void remover(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
 
-        String idParam = request.getParameter("id");
-
-        if (idParam != null && !idParam.isEmpty()){
-            int id = Integer.parseInt(idParam);
-            boolean removido = dao.removerAdm(id);
+        String idAdm = request.getParameter("id");
+        String idProf = request.getParameter("idProf");
+        if (idAdm != null && !idAdm.isEmpty()){
+            int idAdmN = Integer.parseInt(idAdm);
+            boolean removido = dao.removerAdm(idAdmN);
             request.setAttribute("removido", removido);
+        } else if (idProf != null && !idProf.isEmpty()) {
+            int idProfN = Integer.parseInt(idProf);
+            boolean removido = profDao.removerProfessor(idProfN);
+            request.setAttribute("removido",removido);
         }
         // dash recalcula tudo de novo
         response.sendRedirect(request.getContextPath()+"/adm?acao=dashboard");
