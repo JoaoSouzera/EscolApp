@@ -21,66 +21,161 @@ public class AdmServlet extends HttpServlet {
             IOException {
 
         String acao = request.getParameter("acao");
-//        if ("listar".equals(acao)){
-//            listar(request,response);
-//        }
-//        else if("novo".equals(acao)){
-//            request.getRequestDispatcher("WEB-INF/view/form-adm.jsp").forward(request,response);
-//        }
-        if ("remover".equals(acao)) {
-            remover(request,response);
-        } else if ("editar".equals(acao)) {
-            editar(request,response);
-        } else if ("dashboard".equals(acao)) {
-            dashboard(request,response);
-        }else {
+        if(acao.equals("dashboard")){
             dashboard(request,response);
         }
+//        if ("remover".equals(acao)) {
+//            remover(request,response);
+//        } else if ("editar".equals(acao)) {
+//            editar(request,response);
+//        } else if ("dashboard".equals(acao)) {
+//            dashboard(request,response);
+//        }else {
+//            dashboard(request,response);
+//        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         String acao = request.getParameter("acao");
-        if("inserirUsuario".equals(acao)){
-            salvarUsuario(request,response);
-        } else if ("remover".equals(acao)) {
-            remover(request,response);
-        } else if("editar".equals(acao)){
-            editar(request,response);
+        switch (acao) {
+            case "inserirUsuario":
+                String tipo = request.getParameter("tipo");
+                if ("adm".equals(tipo)){
+                    inserirAdm(request, response);
+                }
+                else if ("professor".equals(tipo)) {
+                    inserirProfessor(request,response);
+                }
+
+                break;
+            case "editarAdm":
+                editarAdm(request, response);
+                break;
+
+            case "editarProfessor":
+                editarProfessor(request, response);
+                break;
+
+            case "removerAdm":
+                removerAdm(request, response);
+                break;
+
+            case "removerProfessor":
+                removerProfessor(request, response);
+                break;
         }
     }
 
-    // REGISTRAR USUÁRIO NO BANCO
-    private void salvarUsuario(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    // REGISTRAR USUÁRIO NO BANCO ADM, PROFESSOR
 
-        String tipo = request.getParameter("tipo");
+    private void inserirAdm(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
 
-        if ("adm".equals(tipo)) {
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
-            Adm adm = new Adm(username,email, senha);
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
 
-            dao.inserirAdm(adm);
+        Adm adm = new Adm(username, email, senha);
+        boolean inserido = dao.inserirAdm(adm);
+
+        if (inserido) {
+            request.getSession().setAttribute("msg", "Administrador inserido com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        } else {
+            request.getSession().setAttribute("msg", "Erro ao inserir administrador!");
+            request.getSession().setAttribute("tipoMsg", "erro");
         }
-        else if ("professor".equals(tipo)) {
-            String nome = request.getParameter("nomeProfessor");
-            String username = request.getParameter("usernameProfessor");
-            String email = request.getParameter("emailProfessor");
-            String senha  =request.getParameter("senhaProfessor");
-            int idDisciplina = Integer.parseInt(request.getParameter("idDisciplina"));
 
-            Professor prof = new Professor(nome,username,email,senha,idDisciplina);
-            profDao.inserirProfessor(prof);
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+    }
+
+    private void inserirProfessor(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        String nome = request.getParameter("nomeProfessor");
+        String username = request.getParameter("usernameProfessor");
+        String email = request.getParameter("emailProfessor");
+        String senha = request.getParameter("senhaProfessor");
+        int idDisciplina = Integer.parseInt(request.getParameter("idDisciplina"));
+
+        Professor prof = new Professor(nome, username, email, senha, idDisciplina);
+        boolean inserido = profDao.inserirProfessor(prof);
+
+        if (inserido) {
+            request.getSession().setAttribute("msg", "Professor inserido com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        } else {
+            request.getSession().setAttribute("msg", "Erro ao inserir professor!");
+            request.getSession().setAttribute("tipoMsg", "erro");
         }
+
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    private void salvarUsuario(HttpServletRequest request, HttpServletResponse response)
+//            throws ServletException, IOException {
+//
+//        String tipo = request.getParameter("tipo");
+//
+//        if ("adm".equals(tipo)) {
+//            String username = request.getParameter("username");
+//            String email = request.getParameter("email");
+//            String senha = request.getParameter("senha");
+//            Adm adm = new Adm(username,email, senha);
+//            boolean inserido = dao.inserirAdm(adm);
+//            if (inserido){ // FEEDBACK DA AÇÃO
+//                request.getSession().setAttribute("msg", "Administrador inserido com sucesso!");
+//                request.getSession().setAttribute("tipoMsg", "sucesso");
+//            }
+//            else{
+//                request.getSession().setAttribute("msg", "Erro ao inserir administrador!");
+//                request.getSession().setAttribute("tipoMsg", "erro");
+//            }
+//        }
+//        else if ("professor".equals(tipo)) {
+//            String nome = request.getParameter("nomeProfessor");
+//            String username = request.getParameter("usernameProfessor");
+//            String email = request.getParameter("emailProfessor");
+//            String senha  =request.getParameter("senhaProfessor");
+//            int idDisciplina = Integer.parseInt(request.getParameter("idDisciplina"));
+//
+//            Professor prof = new Professor(nome,username,email,senha,idDisciplina);
+//            boolean inserido = profDao.inserirProfessor(prof);
+//            if (inserido){ // FEEDBACK DA AÇÃO
+//                request.getSession().setAttribute("msg", "Professor inserido com sucesso!");
+//                request.getSession().setAttribute("tipoMsg", "sucesso");
+//            }
+//            else{
+//                request.getSession().setAttribute("msg", "Erro ao inserir professor!");
+//                request.getSession().setAttribute("tipoMsg", "erro");
+//            }
+//        }
 //        else if ("aluno".equals(tipo)) {
 //            salvarAluno(request);
 //        }
 
         // volta para o dashboard
-        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
-    }
+//        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+//    }
 
 
 
@@ -99,24 +194,41 @@ public class AdmServlet extends HttpServlet {
 
 
 
-    // REMOVER ADM
+    // REMOVER ADM, PROFESSOR
 
-    private void remover(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-            IOException {
 
-        String idAdm = request.getParameter("id");
-        String idProf = request.getParameter("idProf");
-        if (idAdm != null && !idAdm.isEmpty()){
-            int idAdmN = Integer.parseInt(idAdm);
-            boolean removido = dao.removerAdm(idAdmN);
-            request.setAttribute("removido", removido);
-        } else if (idProf != null && !idProf.isEmpty()) {
-            int idProfN = Integer.parseInt(idProf);
-            boolean removido = profDao.removerProfessor(idProfN);
-            request.setAttribute("removido",removido);
+    private void removerAdm(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        int id = Integer.parseInt(request.getParameter("id"));
+        boolean removido = dao.removerAdm(id);
+
+        if (removido){ // FEEDBACK DA AÇÃO
+            request.getSession().setAttribute("msg", "Administrador removido com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
         }
-        // dash recalcula tudo de novo
-        response.sendRedirect(request.getContextPath()+"/adm?acao=dashboard");
+        else {
+            request.getSession().setAttribute("msg", "Erro ao remover administrador!");
+            request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
+            // request
+        }
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+    }
+    private void removerProfessor(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        int id = Integer.parseInt(request.getParameter("idProf"));
+        boolean removido = profDao.removerProfessor(id);
+        if (removido){ // FEEDBACK DA AÇÃO
+            request.getSession().setAttribute("msg", "Professor removido com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        }
+        else {
+            request.getSession().setAttribute("msg", "Erro ao remover professor!");
+            request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
+            // request
+        }
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
     }
 
 
@@ -126,35 +238,149 @@ public class AdmServlet extends HttpServlet {
 
 
 
-    // EDITAR ADM
 
-    private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-            IOException{
 
-        // Mostra o formulario com os valores antigos (GET) e atualiza (POST) no mesmo método.
-        if (request.getMethod().equalsIgnoreCase("GET")) {
-            // Mostra o formulário com os valores antigos
-            int id = Integer.parseInt(request.getParameter("id"));
-            Adm adm = dao.buscarPorId(id);
-            request.setAttribute("adm", adm);
-            request.getRequestDispatcher("/WEB-INF/view/editar-adm.jsp")
-                    .forward(request, response);
-        } else if (request.getMethod().equalsIgnoreCase("POST")) {
-            // Recebe os dados do formulário e atualiza
-            int id = Integer.parseInt(request.getParameter("id"));
-            String username = request.getParameter("username");
-            String email = request.getParameter("email");
-            String senha = request.getParameter("senha");
 
-            dao.atualizarUsername(id, username);
-            dao.atualizarEmail(id, email);
-            if (senha != null && !senha.isEmpty()) {
-                dao.atualizarSenha(id, senha);
-            }
-            // Redireciona de volta para a lista ou menu
-            response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+
+
+
+
+
+
+
+//    private void remover(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+//            IOException {
+//        String idAdm = request.getParameter("id");
+//        String idProf = request.getParameter("idProf");
+//        if (idAdm != null && !idAdm.isEmpty()){
+//            int idAdmN = Integer.parseInt(idAdm);
+//            boolean removido = dao.removerAdm(idAdmN);
+//            if (removido){ // FEEDBACK DA AÇÃO
+//                request.getSession().setAttribute("msg", "Administrador removido com sucesso!");
+//                request.getSession().setAttribute("tipoMsg", "sucesso");
+//            }
+//            else {
+//                request.getSession().setAttribute("msg", "Erro ao remover administrador!");
+//                request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
+//                // request
+//            }
+//            request.setAttribute("removido", removido);
+//        } else if (idProf != null && !idProf.isEmpty()) {
+//            int idProfN = Integer.parseInt(idProf);
+//            boolean removido = profDao.removerProfessor(idProfN);
+//            if (removido){ // FEEDBACK DA AÇÃO
+//                request.getSession().setAttribute("msg", "Professor removido com sucesso!");
+//                request.getSession().setAttribute("tipoMsg", "sucesso");
+//            }
+//            else {
+//                request.getSession().setAttribute("msg", "Erro ao remover professor!");
+//                request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
+//                // request
+//            }
+//            request.setAttribute("removido",removido);
+//        }
+//        // dash recalcula tudo de novo
+//        response.sendRedirect(request.getContextPath()+"/adm?acao=dashboard");
+//    }
+
+
+
+
+
+
+
+
+    // EDITAR ADM, PROFESSOR
+
+    private void editarAdm(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        int id = Integer.parseInt(request.getParameter("idAdm"));
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+
+        boolean atualizado = false;
+
+        if (username != null) atualizado |= dao.atualizarUsername(id, username);
+        if (email != null) atualizado |= dao.atualizarEmail(id, email);
+        if (senha != null && !senha.isEmpty()) atualizado |= dao.atualizarSenha(id, senha);
+
+        if (atualizado){ // FEEDBACK DA AÇÃO
+            request.getSession().setAttribute("msg", "Administrador atualizado com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
         }
+        else {
+            request.getSession().setAttribute("msg", "Erro ao atualizar administrador!");
+            request.getSession().setAttribute("tipoMsg", "erro");
+        }
+
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
     }
+    private void editarProfessor(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
+
+        int id = Integer.parseInt(request.getParameter("idProf"));
+        String senha = request.getParameter("senha");
+
+        boolean atualizado = profDao.alterarSenha(id, senha);
+
+        if (atualizado){
+            request.getSession().setAttribute("msg", "Senha atualizada com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        }
+        else{
+            request.getSession().setAttribute("msg", "Erro ao atualizar senha!");
+            request.getSession().setAttribute("tipoMsg", "erro");
+        }
+
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+    }
+
+
+
+//    private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+//            IOException{
+//            int idAdm = Integer.parseInt(request.getParameter("idAdm"));
+//            int idProf = Integer.parseInt(request.getParameter("idProf"));
+//            if (idAdm > 0){
+//                String username = request.getParameter("username");
+//                String email = request.getParameter("email");
+//                String senha = request.getParameter("senha");
+//                boolean senhaAtualizado = false;
+//                boolean userAtualizado = dao.atualizarUsername(idAdm, username);
+//                boolean emailAtualizado = dao.atualizarEmail(idAdm, email);
+//                if (senha != null && !senha.isEmpty()) {
+//                    senhaAtualizado = dao.atualizarSenha(idAdm, senha);
+//                }
+//                if (userAtualizado || emailAtualizado || senhaAtualizado){ // FEEDBACK DA AÇÃO
+//                    request.getSession().setAttribute("msg", "Administrador atualizado com sucesso!");
+//                    request.getSession().setAttribute("tipoMsg", "sucesso");
+//                }
+//                else {
+//                    request.getSession().setAttribute("msg", "Erro ao atualizar administrador!");
+//                    request.getSession().setAttribute("tipoMsg", "erro");
+//                }
+//            } else if (idProf > 0) {
+//                String nome = request.getParameter("nome");
+//                String username = request.getParameter("username");
+//                String email = request.getParameter("email");
+//                String senha = request.getParameter("senha");
+//                int idDisciplina = Integer.parseInt(request.getParameter("idDisciplina"));
+//                boolean senhaAlterada = profDao.alterarSenha(idProf,senha);
+//                if (senhaAlterada){
+//                    request.getSession().setAttribute("msg", "Senha atualizada com sucesso!");
+//                    request.getSession().setAttribute("tipoMsg", "sucesso");
+//                }
+//                else{
+//                    request.getSession().setAttribute("msg", "Erro ao atualizar senha!");
+//                    request.getSession().setAttribute("tipoMsg", "erro");
+//                }
+//            }
+//
+//        // Redireciona de volta para a lista ou menu
+//            response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+//    }
 
 
     // DASHBOARD INICIAL
@@ -164,9 +390,10 @@ public class AdmServlet extends HttpServlet {
         List<Professor> listaProf = profDao.buscarProfessores();
         int totalProf = listaProf.size();
         int totalAdm = lista.size();
+        int totalUsers = totalAdm + totalProf;
         request.setAttribute("listaAdm",lista);
         request.setAttribute("totalAdm", totalAdm);
-
+        request.setAttribute("totalUsers",totalUsers);
         request.setAttribute("listaProf",listaProf);
         request.setAttribute("totalProf",totalProf);
 

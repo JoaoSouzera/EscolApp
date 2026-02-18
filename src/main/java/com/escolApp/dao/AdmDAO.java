@@ -32,7 +32,7 @@ public class AdmDAO {
             e.printStackTrace();
             return false;
         }finally {
-            conexao.desconectar(conexao.conectar());
+            conexao.desconectar(conn);
         }
     }
 
@@ -104,8 +104,9 @@ public class AdmDAO {
     }
     public boolean atualizarEmail(int num, String email){
         Conexao conexao = new Conexao();
+        Connection conn = null;
         try{
-            Connection conn = conexao.conectar();
+            conn = conexao.conectar();
             PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET EMAIL = ? WHERE ID = ?");
             pstmt.setString(1,email);
             pstmt.setInt(2, num);
@@ -118,13 +119,14 @@ public class AdmDAO {
             e.printStackTrace();
             return false;
         }finally {
-            conexao.desconectar(conexao.conectar());
+            conexao.desconectar(conn);
         }
     }
     public boolean atualizarSenha(int num, String senha){
         Conexao conexao = new Conexao();
+        Connection conn = null;
         try{
-            Connection conn = conexao.conectar();
+            conn = conexao.conectar();
             PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET SENHA = ? WHERE ID = ?");
             pstmt.setString(1,senha);
             pstmt.setInt(2, num);
@@ -137,7 +139,7 @@ public class AdmDAO {
             e.printStackTrace();
             return false;
         }finally {
-            conexao.desconectar(conexao.conectar());
+            conexao.desconectar(conn);
         }
     }
     // DELETE

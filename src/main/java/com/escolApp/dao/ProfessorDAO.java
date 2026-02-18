@@ -36,9 +36,10 @@ public class ProfessorDAO {
     // READ
     public List<Professor> buscarProfessores(){ // TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
+        Connection conn = null;
         List<Professor> lista = new ArrayList<>();
         try{
+            conn = conexao.conectar();
             Statement stmt = conn.createStatement();
             ResultSet rset = stmt.executeQuery("SELECT * FROM PROFESSOR");
             while (rset.next()){
@@ -50,7 +51,7 @@ public class ProfessorDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            conexao.desconectar(conexao.conectar());
+            conexao.desconectar(conn);
         }
         return null;
     }

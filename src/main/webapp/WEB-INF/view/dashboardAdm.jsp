@@ -11,6 +11,31 @@
 
 <h1>📊 Painel Administrativo</h1>
 <%
+    String msg = (String) session.getAttribute("msg");
+    String tipo = (String) session.getAttribute("tipoMsg");
+
+    if (msg != null) {
+%>
+<div id="feedback"
+     style="padding:10px; margin:10px 0;
+             border-radius:5px;
+             color:white;
+             background-color:<%= "sucesso".equals(tipo) ? "#28a745" : "#dc3545" %>;">
+    <%= msg %>
+</div>
+
+<script>
+    setTimeout(() => {
+        const msg = document.getElementById("feedback");
+        if (msg) msg.style.display = "none";
+    }, 3000); // desaparece em 3 segundos
+</script>
+<%
+        session.removeAttribute("msg");
+        session.removeAttribute("tipoMsg");
+    }
+%>
+<%
     Adm usuario = (Adm) session.getAttribute("admLogado");
 %>
 
@@ -21,7 +46,9 @@
     <% } %>
 </div>
 
+
 <h2>Resumo</h2>
+<p>Total de Usuários: <strong>${totalUsers}</strong></p>
 <p>Total de Administradores: <strong>${totalAdm}</strong></p>
 <p>Total de Professores: <strong>${totalProf}</strong></p>
 <hr>
@@ -95,7 +122,7 @@
         <form action="${pageContext.request.contextPath}/adm" method="post">
             <td>
                 <%= adm.getId() %>
-                <input type="hidden" name="id" value="<%= adm.getId() %>">
+                <input type="hidden" name="idAdm" value="<%= adm.getId() %>">
             </td>
 
             <td>
@@ -111,13 +138,13 @@
             </td>
 
             <td>
-                <input type="hidden" name="acao" value="editar">
+                <input type="hidden" name="acao" value="editarAdm">
                 <button type="submit">💾 Salvar</button>
             </td>
         </form>
         <td>
         <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
-            <input type="hidden" name="acao" value="remover">
+            <input type="hidden" name="acao" value="removerAdm">
             <input type="hidden" name="id" value="<%= adm.getId() %>">
             <button type="submit"
                     onclick="return confirm('Tem certeza que deseja excluir?')">
@@ -152,25 +179,48 @@
         <th>Email</th>
         <th>Senha</th>
         <th>ID_Disciplina</th>
-        <th>Ações</th>
+        <th>Edição</th>
+        <th>Excluir</th>
     </tr>
         <%
         for (Professor prof : professores) {
     %>
     <tr>
-        <td><%= prof.getId() %></td>
-        <td><%= prof.getNome() %></td>
-        <td><%= prof.getUsername() %></td>
-        <td><%= prof.getEmail() %></td>
-        <td><%= prof.getSenha() %></td>
-        <td><%= prof.getIdDisciplina() %></td>
+        <form action="${pageContext.request.contextPath}/adm" method="post">
+            <td>
+                <%= prof.getId() %>
+                <input type="hidden" name="idProf" value="<%= prof.getId() %>">
+            </td>
+
+            <td>
+                <input type="text" name="nome" value="<%= prof.getNome() %>">
+            </td>
+            <td>
+                <input type="text" name="username" value="<%= prof.getUsername() %>">
+            </td>
+            <td>
+                <input type="email" name="email" value="<%= prof.getEmail() %>">
+            </td>
+            <td>
+                <input type="password" name="senha" placeholder="Nova senha">
+            </td>
+            <td>
+                <input type="text" name="idDisciplina" value="<%= prof.getIdDisciplina()%>">
+            </td>
+            <td>
+                <input type="hidden" name="acao" value="editarProfessor">
+                <button type="submit">💾 Salvar</button>
+            </td>
+        </form>
         <td>
-            <a href="${pageContext.request.contextPath}/adm?acao=editar&id=<%= prof.getId() %>">✏️ Editar</a>
-            |
-            <a href="${pageContext.request.contextPath}/adm?acao=remover&idProf=<%= prof.getId() %>"
-               onclick="return confirm('Deseja remover este professor?')">
-                🗑️ Remover
-            </a>
+            <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
+                <input type="hidden" name="acao" value="removerProfessor">
+                <input type="hidden" name="idProf" value="<%= prof.getId() %>">
+                <button type="submit"
+                        onclick="return confirm('Tem certeza que deseja excluir?')">
+                    🗑️ Excluir
+                </button>
+            </form>
         </td>
     </tr>
         <%
