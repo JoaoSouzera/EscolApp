@@ -1,6 +1,7 @@
 package com.escolApp.utils;
 
 import com.escolApp.conexao.Conexao;
+import com.escolApp.dao.AdmDAO;
 import com.escolApp.dao.NotaDAO;
 import com.escolApp.dao.ProfessorDAO;
 import com.escolApp.model.Nota;
@@ -25,11 +26,11 @@ public class Main {
 //        con1.desconectar(con1.conectar());
 
 
-        ProfessorDAO prof = new ProfessorDAO();
-        Professor prof1 = new Professor(6, "Matheus Rezende", "Matheus", "mat.data", "123",
-                6);
-        NotaDAO nota =  new NotaDAO();
-        Nota notas = new Nota(1,4.5,7.8,1,3);
+//        ProfessorDAO prof = new ProfessorDAO();
+//        Professor prof1 = new Professor(6, "Matheus Rezende", "Matheus", "mat.data", "123",
+//                6);
+//        NotaDAO nota =  new NotaDAO();
+//        Nota notas = new Nota(1,4.5,7.8,1,3);
 //      TESTE NOTA
 //        if (nota.inserirNota(notas)){
 //            System.out.println("Inserido!");
@@ -79,5 +80,9 @@ public class Main {
 //            System.out.println("ERRO");
 //        }
 //    }
+
+        AdmDAO adm = new AdmDAO();
+
+        adm.buscarAdm();
     }
 }
