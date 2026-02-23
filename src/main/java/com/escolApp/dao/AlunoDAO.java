@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlunoDao {
+public class AlunoDAO {
 
     public int inserir(Aluno aluno){
         Conexao conexao = new Conexao();
