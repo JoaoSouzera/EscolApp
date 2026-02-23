@@ -18,6 +18,16 @@ public class Aluno {
         this.senha = senha;
     }
 
+    public Aluno(String matricula, String nome, String username, String email, String senha) {
+        this.matricula = matricula;
+        this.nome = nome;
+        this.username = username;
+        this.email = email;
+        this.senha = senha;
+    }
+
+
+
     public int getId() {
         return id;
     }
