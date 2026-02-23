@@ -1,0 +1,93 @@
+.petit-formal-script-regular {
+    font-family: "Petit Formal Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url(/WEB-INF/assets/icone_fundo.png);
+    display: flex;
+    overflow: hidden;
+
+}
+
+#logo_escolApp {
+    cursor: default;
+    margin-right: 20rem;
+}
+
+img {
+    width: 9rem;
+    margin: 3rem 0rem 0rem 3rem;
+}
+
+#titulo {
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    color: rgba(70, 20, 255, 20);
+    font-weight: 700;
+    font-size: 4rem;
+}
+
+#container_login {
+    background: url(/WEB-INF/assets/papel.png);
+    margin-top: 2rem;
+    width: 30rem;
+    height: 40rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#container_dados {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+
+}
+
+#cadastro {
+    display: flex;
+    gap: 1rem;
+    width: 30rem;
+    margin-left: 6rem;
+    margin-top: 0.4rem;
+}
+
+#cadastro a {
+    text-decoration: none;
+}
+
+#container_botoes {
+    display: flex;
+    margin-left: 5rem;
+    gap: 2rem;
+    margin-top: 4rem;
+
+}
+
+.botoes {
+    width: 10rem;
+    font-size: 1.2rem;
+    padding: 0.7rem;
+    border-radius: 30rem;
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    background-color: rgb(88, 73, 226);
+    border: none;
+}
+
+.campo_input {
+    border: 3px solid rgb(4, 4, 255);
+    width: 18rem;
+    border-radius: 30rem;
+    font-size: 0.9rem;
+    margin-left: 5.6rem;
+    padding: 0.7rem;
+
+}   

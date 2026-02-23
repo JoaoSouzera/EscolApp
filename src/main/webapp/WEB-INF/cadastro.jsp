@@ -17,16 +17,18 @@
 </head>
 
 <body>
-<div id="container_login">
+<div id="container_cadastro">
 
-    <h1 id="titulo">Login</h1>
+    <h1 id="titulo">Cadastrar</h1>
 
     <form action="<%= request.getContextPath() %>/login" method="post" id="container_dados">
 
         <!-- inputs de dados do cadastro -->
-        <input type="text" name="nome" class="campo_input" placeholder="Usário:">
+        <input type="text" name="nome" class="campo_input" placeholder="Nome:">
         <input type="password" name="senha" class="campo_input" placeholder="Senha:">
-        
+        <input type="text" name="Usuario" class="campo_input" placeholder="Email:">
+        <input type="password" name="senha" class="campo_input" placeholder="Matrícula">
+
         <!-- botões -->
         <div id="container_botoes">
             <button type="button" class="botoes" id="cancelar">Cancelar</button>
