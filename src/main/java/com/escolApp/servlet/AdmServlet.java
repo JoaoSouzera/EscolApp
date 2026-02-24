@@ -1,8 +1,10 @@
 package com.escolApp.servlet;
 
 import com.escolApp.dao.AdmDAO;
+import com.escolApp.dao.AlunoDAO;
 import com.escolApp.dao.ProfessorDAO;
 import com.escolApp.model.Adm;
+import com.escolApp.model.Aluno;
 import com.escolApp.model.Professor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import java.util.List;
 public class AdmServlet extends HttpServlet {
     AdmDAO dao = new AdmDAO();
     ProfessorDAO profDao = new ProfessorDAO();
+    AlunoDAO alunoDao = new AlunoDAO();
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
 
@@ -47,7 +50,9 @@ public class AdmServlet extends HttpServlet {
                 else if ("professor".equals(tipo)) {
                     inserirProfessor(request,response);
                 }
-
+                else if("aluno".equals(tipo)){
+                    inserirAluno(request,response);
+                }
                 break;
             case "editarAdm":
                 editarAdm(request, response);
@@ -67,7 +72,7 @@ public class AdmServlet extends HttpServlet {
         }
     }
 
-    // REGISTRAR USUÁRIO NO BANCO ADM, PROFESSOR
+    // REGISTRAR USUÁRIO NO BANCO ADM, PROFESSOR, ALUNO
 
     private void inserirAdm(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -107,6 +112,26 @@ public class AdmServlet extends HttpServlet {
             request.getSession().setAttribute("tipoMsg", "sucesso");
         } else {
             request.getSession().setAttribute("msg", "Erro ao inserir professor!");
+            request.getSession().setAttribute("tipoMsg", "erro");
+        }
+
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+    }
+    private void inserirAluno(HttpServletRequest request, HttpServletResponse response)
+            throws IOException{
+        String matricula = request.getParameter("matricula");
+        String nome = request.getParameter("nome");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        Aluno aluno = new Aluno(matricula,nome,username,email,senha);
+
+        int inserido = alunoDao.inserir(aluno);
+        if (inserido > 0){
+            request.getSession().setAttribute("msg", "Aluno inserido com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        } else{
+            request.getSession().setAttribute("msg", "Erro ao inserir aluno!");
             request.getSession().setAttribute("tipoMsg", "erro");
         }
 
@@ -388,14 +413,18 @@ public class AdmServlet extends HttpServlet {
             IOException{
         List<Adm> lista = dao.buscarAdm();
         List<Professor> listaProf = profDao.buscarProfessores();
+        List<Aluno> listaAluno = alunoDao.buscar();
+        int totalAluno = listaAluno.size();
         int totalProf = listaProf.size();
         int totalAdm = lista.size();
-        int totalUsers = totalAdm + totalProf;
+        int totalUsers = totalAdm + totalProf + totalAluno;
         request.setAttribute("listaAdm",lista);
         request.setAttribute("totalAdm", totalAdm);
         request.setAttribute("totalUsers",totalUsers);
         request.setAttribute("listaProf",listaProf);
         request.setAttribute("totalProf",totalProf);
+        request.setAttribute("listaAluno",listaAluno);
+        request.setAttribute("totalAluno",totalAluno);
 
         request.getRequestDispatcher("/WEB-INF/view/dashboardAdm.jsp")
                 .forward(request, response);

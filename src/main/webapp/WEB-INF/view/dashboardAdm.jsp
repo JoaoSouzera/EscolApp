@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.escolApp.model.Adm" %>
 <%@ page import="com.escolApp.model.Professor" %>
+<%@ page import="com.escolApp.model.Aluno" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -425,9 +426,11 @@
 
                 <div id="formAluno" class="dynamic-form" style="display:none;">
                     <h3>Aluno</h3>
-                    <input name="nomeAluno" placeholder="Nome"><br>
                     <input name="matricula" placeholder="Matrícula"><br>
-                    <input name="turma" placeholder="Turma"><br>
+                    <input name="nome" placeholder="Nome"><br>
+                    <input name="username" placeholder="Username"><br>
+                    <input name="email" placeholder="Email"><br>
+                    <input name="senha" placeholder="Senha"><br>
                 </div>
 
                 <button type="submit" class="btn" style="margin-top: 20px;">Salvar</button>
@@ -534,6 +537,55 @@
         </div>
         <% } else { %>
         <p style="color: #5e7a99;">Nenhum professor cadastrado.</p>
+        <% } %>
+    </div>
+    <div class="section">
+        <h2>👥 Alunos cadastrados</h2>
+        <%
+            List<Aluno> listaAluno = (List<Aluno>) request.getAttribute("listaAluno");
+            if (listaAluno != null && !listaAluno.isEmpty()) {
+        %>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Matricula</th>
+                    <th>Nome</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Senha</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (Aluno aluno : listaAluno) { %>
+                <tr>
+                    <form action="${pageContext.request.contextPath}/adm" method="post">
+                        <td><%= aluno.getId() %><input type="hidden" name="idAluno" value="<%= aluno.getId() %>"></td>
+                        <td><input type="text" name="matricula" value="<%= aluno.getMatricula() %>"></td>
+                        <td><input type="text" name="nome" value="<%= aluno.getNome() %>"></td>
+                        <td><input type="text" name="username" value="<%= aluno.getUsername() %>"></td>
+                        <td><input type="email" name="email" value="<%= aluno.getEmail() %>"></td>
+                        <td><input type="password" name="senha" placeholder="Nova senha"></td>
+                        <td>
+                            <input type="hidden" name="acao" value="editarAluno">
+                            <button type="submit" class="btn-tabela editar" title="Salvar alterações">💾</button>
+                        </td>
+                    </form>
+                    <td>
+                        <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
+                            <input type="hidden" name="acao" value="removerAluno">
+                            <input type="hidden" name="id" value="<%= aluno.getId() %>">
+                            <button type="submit" class="btn-tabela excluir" onclick="return confirm('Tem certeza que deseja excluir?')" title="Excluir">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <% } else { %>
+        <p style="color: #5e7a99;">Nenhum aluno cadastrado.</p>
         <% } %>
     </div>
 </div>
