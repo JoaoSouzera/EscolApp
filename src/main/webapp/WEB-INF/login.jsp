@@ -12,24 +12,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style_login.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>../webapp/css/style_login.css">
     <title>Login</title>
 </head>
 
 <body>
 <div id="container_login">
 
-    <h1 id="titulo">Cadastrar</h1>
+    <h1 id="titulo">Login</h1>
 
     <form action="<%= request.getContextPath() %>/login" method="post" id="container_dados">
 
         <!-- inputs de dados do cadastro -->
-        <input type="text" name="nome" class="campo_input" placeholder="Nome:">
+        <input type="text" name="nome" class="campo_input" placeholder="Usário:">
         <input type="password" name="senha" class="campo_input" placeholder="Senha:">
-        <input type="email" name="email" class="campo_input" placeholder="Email:">
-        <input type="text" name="cpf" class="campo_input" placeholder="CPF:">
-        <input type="text" name="cep" class="campo_input" placeholder="CEP:">
-
+        
         <!-- botões -->
         <div id="container_botoes">
             <button type="button" class="botoes" id="cancelar">Cancelar</button>
