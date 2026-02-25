@@ -83,6 +83,6 @@ public class Main {
 
         AdmDAO adm = new AdmDAO();
 
-        adm.buscarAdm();
+        System.out.println(adm.buscarAdm());
     }
 }
