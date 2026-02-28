@@ -65,7 +65,9 @@ public class AdmServlet extends HttpServlet {
             case "removerAdm":
                 removerAdm(request, response);
                 break;
-
+            case "editarAluno":
+                editarAluno(request,response);
+                break;
             case "removerProfessor":
                 removerProfessor(request, response);
                 break;
@@ -362,6 +364,25 @@ public class AdmServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
     }
 
+    private void editarAluno(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+//        int idAluno = Integer.parseInt(request.getParameter("idAluno"));
+//        String matricula = request.getParameter("matricula");
+//        String nome = request.getParameter("nome");
+//        String username = request.getParameter("username");
+//        String email  = request.getParameter("email");
+//        String senha = request.getParameter("senha");
+//        Aluno aluno = new Aluno(idAluno,matricula,nome,username,email,senha);
+//
+//        int atualizado = 0;
+//        if (username != null){
+//            atualizado = alunoDao.atualizarUsername(aluno,)
+//        }
+//
+//        if (username != null) atualizado |= alunoDao.atualizarUsername(idAluno, username);
+//        if (email != null) atualizado |= alunoDao.atualizarEmail(idAluno, email);
+//        if (senha != null && !senha.isEmpty()) atualizado |= alunoDao.atualizarSenha(idAluno, senha);
+    }
 
 
 //    private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException,
