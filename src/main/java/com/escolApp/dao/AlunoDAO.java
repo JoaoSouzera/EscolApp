@@ -50,9 +50,9 @@ public class AlunoDAO {
         Connection conn = conexao.conectar();
 
         try{
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE DISCIPLINA SET MATRICULA = ? WHERE ID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ALUNO SET MATRICULA = ? WHERE ID = ?");
 
-            pstmt.setString(1, aluno.getMatricula());
+            pstmt.setString(1, matricula);
             pstmt.setInt(2, aluno.getId());
 
             if(pstmt.executeUpdate() > 0){
@@ -80,9 +80,9 @@ public class AlunoDAO {
         Connection conn = conexao.conectar();
 
         try{
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE DISCIPLINA SET NOME = ? WHERE ID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ALUNO SET NOME = ? WHERE ID = ?");
 
-            pstmt.setString(1, aluno.getNome());
+            pstmt.setString(1, nome);
             pstmt.setInt(2, aluno.getId());
 
             if(pstmt.executeUpdate() > 0){
@@ -110,9 +110,9 @@ public class AlunoDAO {
         Connection conn = conexao.conectar();
 
         try{
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE DISCIPLINA SET USERNAME = ? WHERE ID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ALUNO SET USERNAME = ? WHERE ID = ?");
 
-            pstmt.setString(1, aluno.getUsername());
+            pstmt.setString(1, user);
             pstmt.setInt(2, aluno.getId());
 
             if(pstmt.executeUpdate() > 0){
@@ -140,9 +140,9 @@ public class AlunoDAO {
         Connection conn = conexao.conectar();
 
         try{
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE DISCIPLINA SET EMAIL = ? WHERE ID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ALUNO SET EMAIL = ? WHERE ID = ?");
 
-            pstmt.setString(1, aluno.getEmail());
+            pstmt.setString(1, email);
             pstmt.setInt(2, aluno.getId());
 
             if(pstmt.executeUpdate() > 0){
@@ -170,9 +170,9 @@ public class AlunoDAO {
         Connection conn = conexao.conectar();
 
         try{
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE DISCIPLINA SET SENHA = ? WHERE ID = ?");
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ALUNO SET SENHA = ? WHERE ID = ?");
 
-            pstmt.setString(1, aluno.getSenha());
+            pstmt.setString(1, senha);
             pstmt.setInt(2, aluno.getId());
 
             if(pstmt.executeUpdate() > 0){
