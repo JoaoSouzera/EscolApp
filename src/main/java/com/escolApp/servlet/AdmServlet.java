@@ -447,7 +447,7 @@ public class AdmServlet extends HttpServlet {
         request.setAttribute("listaAluno",listaAluno);
         request.setAttribute("totalAluno",totalAluno);
 
-        request.getRequestDispatcher("/WEB-INF/view/dashboardAdm.jsp")
+        request.getRequestDispatcher("/WEB-INF/view/inicio_adm.jsp")
                 .forward(request, response);
     }
 }
