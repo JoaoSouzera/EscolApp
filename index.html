@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleglobal.css">
+    <link rel="icon" href="imgs/logo_escolApp.png">
+    <title>Início</title>
+</head>
+<body>
+    <div class="container_conteudo_usuario">
+        <div class="informacao_usuario">
+            <div>
+                <img src="imgs/profile.png" alt="imagem_usuario" class="img_usuario">
+                <p>${usuario.turma}</p>
+                <p>${usuario.nome}</p>
+            </div>
+            <div class="aside">
+                <a href="inicio.html" class="campos usado"><img src="imgs/home.png" alt="icone">Início</a>
+                <a href="notas.html" class="campos"><img src="imgs/notas.png" alt="icone">Notas</a>
+                <a href="materias.html" class="campos"><img src="imgs/book.png" alt="icone">Matérias</a>
+                <a href="calendario.html" class="campos"><img src="imgs/calendario.png" alt="icone"> Calendário</a>
+            </div>
+        </div>
+        </div>
+        <div class="container_aside_materias">
+            <form class="container_busca" action="buscarMateria" method="get">
+                <img src="imgs/search.png" alt="icone">
+                <input type="text" name="busca" placeholder="Buscar Matéria" class="input_busca">
+            </form>
+            <h1>Olá, <strong>${usuario.apelido}</strong><img src="imgs/iconeteacher.png" alt="icone"></h1>
+</body>
+</html>
