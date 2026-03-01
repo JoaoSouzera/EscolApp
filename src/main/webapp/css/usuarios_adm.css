@@ -1,0 +1,156 @@
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f0f2ff;
+}
+
+
+section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 2rem;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #555;
+    cursor: pointer;
+    padding: 0.4rem 1.1rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+.tab-btn.active {
+    background-color: #3d32b5;
+    color: white;
+}
+
+.tab-btn:hover:not(.active) {
+    background-color: rgba(61, 50, 181, 0.1);
+    color: #3d32b5;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #3d32b5;
+    color: white;
+    border-radius: 2rem;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: auto;
+}
+
+.table-wrapper {
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(34, 48, 141, 0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    background-color: #22308d;
+    color: white;
+}
+
+thead th {
+    padding: 1rem 1.2rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eef0fa;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f5f6ff;
+}
+
+tbody td {
+    padding: 0.82rem 1.2rem;
+    text-align: center;
+    font-size: 0.92rem;
+    color: #333;
+}
+
+tbody td:nth-child(2) {
+    color: #3d32b5;
+    font-weight: 600;
+}
+
+tbody td:nth-child(3) {
+    color: #555;
+}
+
+.senha-dots {
+    letter-spacing: 2px;
+    color: #888;
+    font-size: 1rem;
+}
+
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-edit {
+    color: #3d32b5;
+    font-size: 1.15rem;
+    text-decoration: none;
+    transition: transform 0.15s;
+    display: inline-flex;
+}
+
+.btn-del {
+    color: #e02a2a;
+    font-size: 1.15rem;
+    text-decoration: none;
+    transition: transform 0.15s;
+    display: inline-flex;
+}
+
+.btn-edit:hover,
+.btn-del:hover {
+    transform: scale(1.2);
+}
+        
