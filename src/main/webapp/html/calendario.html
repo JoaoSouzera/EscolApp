@@ -3,9 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <title>EscolApp - Calendário</title>
+    <link rel="icon" href="../WEB-INF/assets/images/logo_escolApp.png">
+    <link rel="stylesheet" href="../css/style_global.css">
+    <link rel="stylesheet" href="../css/style_aluno_calendario.css">
 <body>
+    <aside>
+        <div class="container_conteudo_usuario">
+            <div class="informacao_usuario">
+                <div>
+                    <img src="../WEB-INF/assets/images/ronaldinho.png" alt="imagem_usuario" class="img_usuario">
+                    <p>Turma 2G</p>
+                </div>
+                <p>Alexandre o Grande</p>
+            </div>
     
+            <div class="aside">
+    
+                <a href="inicio.html" class="campos">
+                    <img src="../WEB-INF/assets/images/icone_casa.png" alt="icone"> Início
+                </a>
+
+                <a href="notas_aluno.html" class="campos">
+                    <img src="../WEB-INF/assets/images/icone_casa.png" alt="icone"> Notas
+                </a>
+        
+                <a href="materias_aluno.html" class="campos">
+                    <img src="../WEB-INF/assets/images/icone_livro.png" alt="icone"> Matérias
+                </a>
+        
+                <a href="calendario_aluno.html" class="campos usado">
+                    <img src="../WEB-INF/assets/images/icone_calendario.png" alt="icone"> Calendário
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <section class="calendario-section">
+            <header class="calendario-header">
+                <h1>Calendário Escolar</h1>
+                <div class="calendario-controls">
+                    <div class="seletor-meses">
+                        <span>Fevereiro de 2026</span>
+                        <i class="arrow-icon"></i> 
+                    </div>
+                    <div class="etiqueta-container">
+                        <span class="etiqueta etiqueta-provas">Provas</span>
+                        <span class="etiqueta etiqueta-reuniao">Reunião</span>
+                        <span class="etiqueta etiqueta-eventos">Eventos</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="calendario-grid">
+                <div class="day-header">DOM</div>
+                <div class="day-header">SEG</div>
+                <div class="day-header">TER</div>
+                <div class="day-header">QUA</div>
+                <div class="day-header">QUI</div>
+                <div class="day-header">SEX</div>
+                <div class="day-header">SÁB</div>
+
+                <div class="day-cell">1</div>
+                <div class="day-cell">2</div>
+                <div class="day-cell">3</div>
+                <div class="day-cell">4</div>
+                <div class="day-cell">5</div>
+                <div class="day-cell">6</div>
+                <div class="day-cell">7</div>
+                <div class="day-cell">8</div>
+                <div class="day-cell">9</div>
+                <div class="day-cell">10</div>
+                <div class="day-cell">11</div>
+                <div class="day-cell">12</div>
+                <div class="day-cell">13</div>
+                <div class="day-cell">14</div>
+                <div class="day-cell">15</div>
+                <div class="day-cell">16</div>
+                <div class="day-cell">17</div>
+                <div class="day-cell">18</div>
+                <div class="day-cell dia-atual">19</div> 
+                <div class="day-cell">20</div>
+                <div class="day-cell">21</div>
+                <div class="day-cell">22</div>
+                <div class="day-cell">23</div>
+                <div class="day-cell">24</div>
+                <div class="day-cell">25</div>
+                <div class="day-cell">26</div>
+                <div class="day-cell">27</div>
+                <div class="day-cell">28</div>
+                <div class="day-cell next-month">1</div>
+                <div class="day-cell next-month">2</div>
+                <div class="day-cell next-month">3</div>
+                <div class="day-cell next-month">4</div>
+                <div class="day-cell next-month">5</div>
+            </div>
+
+            <button class="btn-voltar">Voltar</button>
+        </section>
+
+        <section class="events-panel">
+            <h3>Próximos eventos</h3>
+            <select class="event-filter">
+                <option>Todos</option>
+            </select>
+
+            <div class="events-card">
+                <h4 class="event-date-title">Terça, 19 Fevereiro</h4>
+                
+                <div class="event-item">
+                    <p class="event-day">Quarta, 25 Fevereiro</p>
+                    <div class="event-tag tag-purple">Conselho de classe</div>
+                    <span class="event-time">10:00</span>
+                </div>
+
+                <div class="event-item">
+                    <p class="event-day">Quarta, 25 abril</p>
+                    <div class="event-tag tag-green">Prova de matemática</div>
+                    <span class="event-time">10:00</span>
+                </div>
+
+                <div class="event-item">
+                    <p class="event-day">Quarta, 25 abril</p>
+                    <div class="event-tag tag-purple">Festa junina</div>
+                    <span class="event-time">10:00</span>
+                </div>
+
+                <div class="event-item">
+                    <p class="event-day">Quarta, 25 abril</p>
+                    <div class="event-tag tag-green">Prova de Português</div>
+                    <span class="event-time">10:00</span>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
