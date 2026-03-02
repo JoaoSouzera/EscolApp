@@ -47,11 +47,12 @@ public class ObservacaoDAO {
                         rset.getTimestamp("DATA"), rset.getInt("ID_ALUNO"), rset.getInt("ID_PROFESSOR"),
                         rset.getInt("ID_DISCIPLINA")));
             }
+            return listaObs;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
             conexao.desconectar(conn);
         }
-        return null;
+        return listaObs;
     }
 }

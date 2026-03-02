@@ -26,8 +26,10 @@ public class Observacao {
         this.id_professor = id_professor;
         this.id_disciplina = id_disciplina;
     }
+    public Observacao() {
+    }
 
-    public int getId() {
+        public int getId() {
         return id;
     }
 
@@ -58,6 +60,23 @@ public class Observacao {
     public void setData(Timestamp data) {
         this.data = data;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setId_aluno(int id_aluno) {
+        this.id_aluno = id_aluno;
+    }
+
+    public void setId_professor(int id_professor) {
+        this.id_professor = id_professor;
+    }
+
+    public void setId_disciplina(int id_disciplina) {
+        this.id_disciplina = id_disciplina;
+    }
+
     public String toString() {
         return "Observacao{" +
                 "id=" + id +

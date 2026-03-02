@@ -24,23 +24,23 @@ public class LoginServlet  extends HttpServlet {
         String username = request.getParameter("username");
         String senha = request.getParameter("senha");
 
+        // 1. Tenta autenticar como ADMIN
         Adm adm = dao.autenticar(username, senha);
-        Professor prof = profDao.autenticar(username,senha);
-        if (adm != null){
-            // salva sessão
-            request.getSession().setAttribute("admLogado",adm);
-            // manda para o menu de adm
-            response.sendRedirect(request.getContextPath()+"/adm?acao=dashboard");
-        }else {
-            // retorna o erro de login
-            request.setAttribute("erro", "Usuário ou senha inválidos");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        if (adm != null) {
+            request.getSession().setAttribute("admLogado", adm);
+            response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+            return; // IMPORTANTE: para a execução
         }
-        if (prof != null){
-            // salva sessão
-            request.getSession().setAttribute("profLogado",prof);
-            // manda para o menu de professor
-            response.sendRedirect(request.getContextPath()+"/professor?acao=dashboard");
+
+        // 2. Tenta autenticar como PROFESSOR
+        Professor prof = profDao.autenticar(username, senha);
+        if (prof != null) {
+            request.getSession().setAttribute("professorLogado", prof);
+            response.sendRedirect(request.getContextPath() + "/professor?acao=dashboard");
+            return; // IMPORTANTE: para a execução
         }
+        request.setAttribute("erro", "Usuário ou senha inválidos");
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
+

@@ -125,6 +125,7 @@ public class ProfessorDAO {
                         rs.getInt("id_disciplina")
                 );
             }
+            return prof;
 
         } catch (Exception e) {
             e.printStackTrace();
