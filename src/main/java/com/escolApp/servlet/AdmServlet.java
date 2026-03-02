@@ -27,15 +27,6 @@ public class AdmServlet extends HttpServlet {
         if(acao.equals("dashboard")){
             dashboard(request,response);
         }
-//        if ("remover".equals(acao)) {
-//            remover(request,response);
-//        } else if ("editar".equals(acao)) {
-//            editar(request,response);
-//        } else if ("dashboard".equals(acao)) {
-//            dashboard(request,response);
-//        }else {
-//            dashboard(request,response);
-//        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
@@ -71,6 +62,8 @@ public class AdmServlet extends HttpServlet {
             case "removerProfessor":
                 removerProfessor(request, response);
                 break;
+            case "removerAluno":
+                removerAluno(request,response);
         }
     }
 
@@ -140,88 +133,7 @@ public class AdmServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private void salvarUsuario(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        String tipo = request.getParameter("tipo");
-//
-//        if ("adm".equals(tipo)) {
-//            String username = request.getParameter("username");
-//            String email = request.getParameter("email");
-//            String senha = request.getParameter("senha");
-//            Adm adm = new Adm(username,email, senha);
-//            boolean inserido = dao.inserirAdm(adm);
-//            if (inserido){ // FEEDBACK DA AÇÃO
-//                request.getSession().setAttribute("msg", "Administrador inserido com sucesso!");
-//                request.getSession().setAttribute("tipoMsg", "sucesso");
-//            }
-//            else{
-//                request.getSession().setAttribute("msg", "Erro ao inserir administrador!");
-//                request.getSession().setAttribute("tipoMsg", "erro");
-//            }
-//        }
-//        else if ("professor".equals(tipo)) {
-//            String nome = request.getParameter("nomeProfessor");
-//            String username = request.getParameter("usernameProfessor");
-//            String email = request.getParameter("emailProfessor");
-//            String senha  =request.getParameter("senhaProfessor");
-//            int idDisciplina = Integer.parseInt(request.getParameter("idDisciplina"));
-//
-//            Professor prof = new Professor(nome,username,email,senha,idDisciplina);
-//            boolean inserido = profDao.inserirProfessor(prof);
-//            if (inserido){ // FEEDBACK DA AÇÃO
-//                request.getSession().setAttribute("msg", "Professor inserido com sucesso!");
-//                request.getSession().setAttribute("tipoMsg", "sucesso");
-//            }
-//            else{
-//                request.getSession().setAttribute("msg", "Erro ao inserir professor!");
-//                request.getSession().setAttribute("tipoMsg", "erro");
-//            }
-//        }
-//        else if ("aluno".equals(tipo)) {
-//            salvarAluno(request);
-//        }
-
-        // volta para o dashboard
-//        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
-//    }
-
-
-
-
-
-
-    // LER ADM'S
-//    private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-//            IOException {
-//        List<Adm> lista = dao.buscarAdm();
-//        request.setAttribute("listaAdm",lista);
-//        response.sendRedirect(request.getContextPath()+"/adm?acao=dashboard");
-//    }
-
-
-
-
-
-    // REMOVER ADM, PROFESSOR
+    // REMOVER ADM, PROFESSOR, ALUNO
 
 
     private void removerAdm(HttpServletRequest request, HttpServletResponse response)
@@ -257,67 +169,29 @@ public class AdmServlet extends HttpServlet {
         }
         response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
     }
+    private void removerAluno(HttpServletRequest request, HttpServletResponse response)
+            throws IOException{
+        int id  = Integer.parseInt(request.getParameter("idAluno"));
+        String matricula = request.getParameter("matricula");
+        String nome = request.getParameter("nome");
+        String username = request.getParameter("username");
+        String email  = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        Aluno aluno = new Aluno(id,matricula,nome,username,email,senha);
+        boolean removido = alunoDao.remover(aluno);
+        if (removido){ // FEEDBACK DA AÇÃO
+            request.getSession().setAttribute("msg", "Professor removido com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        }
+        else {
+            request.getSession().setAttribute("msg", "Erro ao remover professor!");
+            request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
+            // request
+        }
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private void remover(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-//            IOException {
-//        String idAdm = request.getParameter("id");
-//        String idProf = request.getParameter("idProf");
-//        if (idAdm != null && !idAdm.isEmpty()){
-//            int idAdmN = Integer.parseInt(idAdm);
-//            boolean removido = dao.removerAdm(idAdmN);
-//            if (removido){ // FEEDBACK DA AÇÃO
-//                request.getSession().setAttribute("msg", "Administrador removido com sucesso!");
-//                request.getSession().setAttribute("tipoMsg", "sucesso");
-//            }
-//            else {
-//                request.getSession().setAttribute("msg", "Erro ao remover administrador!");
-//                request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
-//                // request
-//            }
-//            request.setAttribute("removido", removido);
-//        } else if (idProf != null && !idProf.isEmpty()) {
-//            int idProfN = Integer.parseInt(idProf);
-//            boolean removido = profDao.removerProfessor(idProfN);
-//            if (removido){ // FEEDBACK DA AÇÃO
-//                request.getSession().setAttribute("msg", "Professor removido com sucesso!");
-//                request.getSession().setAttribute("tipoMsg", "sucesso");
-//            }
-//            else {
-//                request.getSession().setAttribute("msg", "Erro ao remover professor!");
-//                request.getSession().setAttribute("tipoMsg", "erro"); // usando session pq o sendRedirect cria novo
-//                // request
-//            }
-//            request.setAttribute("removido",removido);
-//        }
-//        // dash recalcula tudo de novo
-//        response.sendRedirect(request.getContextPath()+"/adm?acao=dashboard");
-//    }
-
-
-
-
-
-
-
-
-    // EDITAR ADM, PROFESSOR
+    // EDITAR ADM, PROFESSOR, ALUNO
 
     private void editarAdm(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -365,68 +239,37 @@ public class AdmServlet extends HttpServlet {
     }
 
     private void editarAluno(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        int idAluno = Integer.parseInt(request.getParameter("idAluno"));
+        String matricula = request.getParameter("matricula");
+        String nome = request.getParameter("nome");
+        String username = request.getParameter("username");
+        String email  = request.getParameter("email");
+        String senha = request.getParameter("senha");
+        Aluno aluno = new Aluno(idAluno,matricula,nome,username,email,senha);
 
-//        int idAluno = Integer.parseInt(request.getParameter("idAluno"));
-//        String matricula = request.getParameter("matricula");
-//        String nome = request.getParameter("nome");
-//        String username = request.getParameter("username");
-//        String email  = request.getParameter("email");
-//        String senha = request.getParameter("senha");
-//        Aluno aluno = new Aluno(idAluno,matricula,nome,username,email,senha);
-//
-//        int atualizado = 0;
-//        if (username != null){
-//            atualizado = alunoDao.atualizarUsername(aluno,)
-//        }
-//
-//        if (username != null) atualizado |= alunoDao.atualizarUsername(idAluno, username);
-//        if (email != null) atualizado |= alunoDao.atualizarEmail(idAluno, email);
-//        if (senha != null && !senha.isEmpty()) atualizado |= alunoDao.atualizarSenha(idAluno, senha);
+        int atualizado = 0;
+        if (username != null){
+            atualizado = alunoDao.atualizarUsername(aluno, username);
+        }
+        if (email != null){
+            atualizado = alunoDao.atualizarEmail(aluno,email);
+        }
+        if (senha != null && !senha.isEmpty()){
+            atualizado = alunoDao.atualizarSenha(aluno,senha);
+        }
+
+        if (atualizado > 0){
+            request.getSession().setAttribute("msg", "Aluno atualizada com sucesso!");
+            request.getSession().setAttribute("tipoMsg", "sucesso");
+        }
+        else{
+            request.getSession().setAttribute("msg", "Erro ao atualizar aluno!");
+            request.getSession().setAttribute("tipoMsg", "erro");
+        }
+
+        response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
     }
 
-
-//    private void editar(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-//            IOException{
-//            int idAdm = Integer.parseInt(request.getParameter("idAdm"));
-//            int idProf = Integer.parseInt(request.getParameter("idProf"));
-//            if (idAdm > 0){
-//                String username = request.getParameter("username");
-//                String email = request.getParameter("email");
-//                String senha = request.getParameter("senha");
-//                boolean senhaAtualizado = false;
-//                boolean userAtualizado = dao.atualizarUsername(idAdm, username);
-//                boolean emailAtualizado = dao.atualizarEmail(idAdm, email);
-//                if (senha != null && !senha.isEmpty()) {
-//                    senhaAtualizado = dao.atualizarSenha(idAdm, senha);
-//                }
-//                if (userAtualizado || emailAtualizado || senhaAtualizado){ // FEEDBACK DA AÇÃO
-//                    request.getSession().setAttribute("msg", "Administrador atualizado com sucesso!");
-//                    request.getSession().setAttribute("tipoMsg", "sucesso");
-//                }
-//                else {
-//                    request.getSession().setAttribute("msg", "Erro ao atualizar administrador!");
-//                    request.getSession().setAttribute("tipoMsg", "erro");
-//                }
-//            } else if (idProf > 0) {
-//                String nome = request.getParameter("nome");
-//                String username = request.getParameter("username");
-//                String email = request.getParameter("email");
-//                String senha = request.getParameter("senha");
-//                int idDisciplina = Integer.parseInt(request.getParameter("idDisciplina"));
-//                boolean senhaAlterada = profDao.alterarSenha(idProf,senha);
-//                if (senhaAlterada){
-//                    request.getSession().setAttribute("msg", "Senha atualizada com sucesso!");
-//                    request.getSession().setAttribute("tipoMsg", "sucesso");
-//                }
-//                else{
-//                    request.getSession().setAttribute("msg", "Erro ao atualizar senha!");
-//                    request.getSession().setAttribute("tipoMsg", "erro");
-//                }
-//            }
-//
-//        // Redireciona de volta para a lista ou menu
-//            response.sendRedirect(request.getContextPath() + "/adm?acao=dashboard");
-//    }
 
 
     // DASHBOARD INICIAL
@@ -447,7 +290,7 @@ public class AdmServlet extends HttpServlet {
         request.setAttribute("listaAluno",listaAluno);
         request.setAttribute("totalAluno",totalAluno);
 
-        request.getRequestDispatcher("/WEB-INF/view/inicio_adm.jsp")
+        request.getRequestDispatcher("/WEB-INF/view/dashboardAdm.jsp")
                 .forward(request, response);
     }
 }

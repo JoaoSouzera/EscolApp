@@ -1,6 +1,7 @@
 package com.escolApp.dao;
 
 import com.escolApp.conexao.Conexao;
+import com.escolApp.model.Adm;
 import com.escolApp.model.Professor;
 
 import java.sql.*;
@@ -96,4 +97,40 @@ public class ProfessorDAO {
             conexao.desconectar(conexao.conectar());
         }
     }
+
+
+    // AUTENTICAR
+    public Professor autenticar(String username, String senha) {
+        Conexao conexao = new Conexao();
+        Professor prof = null;
+
+        String sql = "SELECT * FROM professor WHERE username = ? AND senha = ?";
+
+        try (
+                Connection conn = conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, senha);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                prof = new Professor(rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("senha"),
+                        rs.getInt("id_disciplina")
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return prof;
+    }
+
 }

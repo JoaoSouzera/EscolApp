@@ -40,9 +40,10 @@ public class AdmDAO {
 
     public List<Adm> buscarAdm(){
         Conexao conexao = new Conexao();
+        Connection conn = null;
         List<Adm> lista = new ArrayList<>();
         try {
-            Connection conn = conexao.conectar();
+            conn = conexao.conectar();
             Statement stmt = conn.createStatement();
             ResultSet rset = stmt.executeQuery("SELECT * FROM ADM");
             while (rset.next()){
@@ -53,7 +54,7 @@ public class AdmDAO {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            conexao.desconectar(conexao.conectar());
+            conexao.desconectar(conn);
         }
         return null;
     }

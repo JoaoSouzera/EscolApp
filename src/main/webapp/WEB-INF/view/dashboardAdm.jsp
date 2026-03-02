@@ -1,650 +1,592 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.escolApp.model.Adm" %>
-<%@ page import="com.escolApp.model.Professor" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.escolApp.model.Aluno" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html>
+<%@ page import="com.escolApp.model.Professor" %>
+<%@ page import="com.escolApp.model.Adm" %>
+<%@ page import="java.util.List" %>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <title>Dashboard - Administração</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Fonte moderna (Google Fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
-    <!-- Chart.js para gráficos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            background-color: #f5f9ff;
-            color: #1e2b3c;
-            padding: 24px;
+            background: #f0f2f5;
+            display: flex;
+        }
+
+        .menu {
+            width: 250px;
+            background: #1e2b3f;
+            color: white;
             min-height: 100vh;
+            position: fixed;
             display: flex;
             flex-direction: column;
         }
 
-        /* Container principal */
-        .dashboard-container {
-            max-width: 1400px;
-            margin: 0 auto;
+        .menu h3 {
+            padding: 20px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .menu .menu-items {
+            flex: 1;
+        }
+
+        .menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
+        }
+
+        .menu a:hover {
+            background: #253040;
+            color: white;
+        }
+
+        .menu a i {
+            width: 25px;
+        }
+
+        .divider {
+            color: #8196b3;
+            font-size: 12px;
+            padding: 15px 20px 5px;
+        }
+
+        /* Botão de logout */
+        .logout-btn {
+            margin-top: auto;
+            border-top: 1px solid #334155;
+        }
+
+        .logout-btn a {
+            color: #ffb3b3;
+        }
+
+        .logout-btn a:hover {
+            background: #3b2a2a;
+            color: #ff6b6b;
+        }
+
+        .logout-btn i {
+            color: #ff8a8a;
+        }
+
+        .conteudo {
+            margin-left: 250px;
+            padding: 25px;
             width: 100%;
         }
 
-        /* Cabeçalho */
-        .header {
+        .cards {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 16px 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 30, 60, 0.08);
-            margin-bottom: 32px;
+            gap: 20px;
+            margin: 25px 0;
             flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #0a3b5c;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: #eef4fa;
-            padding: 8px 16px;
-            border-radius: 40px;
-        }
-
-        .user-info span {
-            color: #1a4972;
-            font-weight: 500;
-        }
-
-        .logout-link {
-            background: #d4e0f0;
-            color: #0f3b6a;
-            text-decoration: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .logout-link:hover {
-            background: #b8cbe0;
-        }
-
-        /* Cards de resumo */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
         }
 
         .card {
             background: white;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 6px 18px rgba(0, 45, 80, 0.06);
-            border: 1px solid #e2edff;
-            transition: transform 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 65, 131, 0.12);
-        }
-
-        .card-title {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #5e7a99;
-            margin-bottom: 8px;
-        }
-
-        .card-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #0b4f8c;
-        }
-
-        /* Feedback (toast) */
-        #feedback {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            padding: 14px 24px;
-            border-radius: 40px;
-            color: white;
-            font-weight: 500;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* Seções */
-        .section {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 40px;
-            box-shadow: 0 6px 16px rgba(0, 40, 80, 0.05);
-            border: 1px solid #deecfd;
-        }
-
-        .section h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #113755;
-            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 180px;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid #cde1f5;
-            padding-bottom: 12px;
+            justify-content: space-between;
         }
 
-        /* Formulário */
-        .form-cadastro {
-            background: #f9fcff;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #cde1f5;
+        .card h4 {
+            color: #5e6f8d;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
 
-        .form-row {
-            margin-bottom: 20px;
+        .card .numero {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1e293b;
         }
 
-        .form-row label {
-            display: block;
-            font-weight: 500;
-            color: #1d4e7c;
-            margin-bottom: 6px;
+        .card i {
+            font-size: 35px;
+            color: #b9c7e4;
         }
 
-        select, input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #c2d6ec;
-            border-radius: 14px;
-            font-size: 1rem;
-            transition: 0.2s;
+        .titulo {
+            margin: 30px 0 15px;
+            color: #1e2a44;
+        }
+
+        .msg {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .msg.erro {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .tabela-container {
             background: white;
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: #1e7ac5;
-            box-shadow: 0 0 0 3px rgba(23, 115, 230, 0.15);
-        }
-
-        .btn {
-            background: #1976D2;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .btn:hover {
-            background: #0f5fb0;
-            transform: scale(1.02);
-        }
-
-        .btn-excluir {
-            background: #dc3545;
-        }
-
-        .btn-excluir:hover {
-            background: #b02a37;
-        }
-
-        /* Campos dinâmicos */
-        .dynamic-form {
-            background: #e9f2fc;
-            border-radius: 18px;
-            padding: 20px;
-            margin-top: 16px;
-            border-left: 4px solid #1976D2;
-        }
-
-        .dynamic-form h3 {
-            color: #0b3d66;
-            margin-bottom: 16px;
-            font-size: 1.2rem;
-        }
-
-        .dynamic-form input {
-            background: white;
-            margin-bottom: 12px;
-        }
-
-        /* Tabelas */
-        .table-responsive {
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
             overflow-x: auto;
-            border-radius: 18px;
-            border: 1px solid #d6e5f5;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            min-width: 800px;
         }
 
         th {
-            background: #e2edfe;
-            color: #1a4b77;
-            font-weight: 600;
-            padding: 16px 12px;
             text-align: left;
+            padding: 10px;
+            color: #52607a;
+            border-bottom: 2px solid #e5ecf3;
         }
 
         td {
-            padding: 14px 12px;
-            border-bottom: 1px solid #ddeeff;
-            vertical-align: middle;
+            padding: 10px;
+            border-bottom: 1px solid #edf2f9;
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: #f2f8ff;
-        }
-
-        td input {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #bcd0e9;
-            border-radius: 10px;
-            background: #fbfeff;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-tabela {
-            background: transparent;
+        .btn {
             border: none;
-            font-size: 1.2rem;
+            padding: 5px 10px;
+            border-radius: 4px;
             cursor: pointer;
-            padding: 6px 10px;
-            border-radius: 30px;
-            transition: 0.2s;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 3px;
         }
 
-        .btn-tabela.editar {
-            color: #1b6ec2;
-        }
-        .btn-tabela.excluir {
-            color: #dc3545;
-        }
-        .btn-tabela:hover {
-            background: #e4edf9;
+        .btn-edit { background: #ecf2fe; color: #3c66c5; }
+        .btn-delete { background: #ffeaf1; color: #b91c4b; }
+        .btn-novo { background: #e1e9fe; color: #344e9c; padding: 8px 15px; margin-bottom: 15px; display: inline-block; }
+
+        input, select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 100%;
         }
 
-        /* Gráfico */
-        .grafico-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px 0;
+        .form-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
         }
 
-        hr {
-            display: none;
+        .form-container h3 {
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: bold;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
-<div class="dashboard-container">
 
-    <!-- Mensagem de feedback (toast) -->
-    <%
-        String msg = (String) session.getAttribute("msg");
-        String tipo = (String) session.getAttribute("tipoMsg");
-        if (msg != null) {
-    %>
-    <div id="feedback" style="background-color: <%= "sucesso".equals(tipo) ? "#28a745" : "#dc3545" %>;">
-        <%= msg %>
+<!-- MENU LATERAL -->
+<div class="menu">
+    <div class="menu-items">
+        <h3><i class="fas fa-school"></i> EscolaApp</h3>
+        <div class="divider">MENU</div>
+        <a href="<%= request.getContextPath() %>/adm?acao=dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+        <div class="divider">CADASTROS</div>
+        <a href="#admins"><i class="fas fa-user-shield"></i> Administradores</a>
+        <a href="#professores"><i class="fas fa-user-tie"></i> Professores</a>
+        <a href="#alunos"><i class="fas fa-user-graduate"></i> Alunos</a>
     </div>
-    <script>
-        setTimeout(() => {
-            const msg = document.getElementById("feedback");
-            if (msg) msg.style.display = "none";
-        }, 3000);
-    </script>
-    <%
+
+    <!-- BOTÃO DE LOGOUT -->
+    <div class="logout-btn">
+        <a href="<%= request.getContextPath() %>/logout"><i class="fas fa-sign-out-alt"></i> Sair do Sistema</a>
+    </div>
+</div>
+
+<!-- CONTEÚDO -->
+<div class="conteudo">
+
+    <!-- TÍTULO E MENSAGENS -->
+    <h1>Dashboard Administrativo</h1>
+
+    <% String msg = (String) session.getAttribute("msg");
+        String tipoMsg = (String) session.getAttribute("tipoMsg");
+        if(msg != null) {
             session.removeAttribute("msg");
             session.removeAttribute("tipoMsg");
-        }
     %>
-
-    <!-- Cabeçalho com boas-vindas -->
-    <div class="header">
-        <h1>📘 Painel Administrativo</h1>
-        <%
-            Adm usuario = (Adm) session.getAttribute("admLogado");
-            if (usuario != null) {
-        %>
-        <div class="user-info">
-            <span>👤 <%= usuario.getUsername() %></span>
-            <a href="${pageContext.request.contextPath}/logout" class="logout-link">Sair</a>
-        </div>
-        <% } %>
+    <div class="msg <%= tipoMsg != null ? tipoMsg : "" %>">
+        <i class="fas fa-<%= tipoMsg != null && tipoMsg.equals("erro") ? "exclamation-circle" : "check-circle" %>"></i>
+        <%= msg %>
     </div>
+    <% } %>
 
-    <!-- Cards de resumo -->
-    <div class="cards-grid">
+    <!-- CARDS -->
+    <div class="cards">
         <div class="card">
-            <div class="card-title">Total de usuários</div>
-            <div class="card-value">${totalUsers}</div>
+            <div><h4>Total Usuários</h4><span class="numero"><%= request.getAttribute("totalUsers") != null ? request.getAttribute("totalUsers") : 0 %></span></div>
+            <i class="fas fa-users"></i>
         </div>
         <div class="card">
-            <div class="card-title">Administradores</div>
-            <div class="card-value">${totalAdm}</div>
+            <div><h4>Administradores</h4><span class="numero"><%= request.getAttribute("totalAdm") != null ? request.getAttribute("totalAdm") : 0 %></span></div>
+            <i class="fas fa-user-shield"></i>
         </div>
         <div class="card">
-            <div class="card-title">Professores</div>
-            <div class="card-value">${totalProf}</div>
+            <div><h4>Professores</h4><span class="numero"><%= request.getAttribute("totalProf") != null ? request.getAttribute("totalProf") : 0 %></span></div>
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="card">
+            <div><h4>Alunos</h4><span class="numero"><%= request.getAttribute("totalAluno") != null ? request.getAttribute("totalAluno") : 0 %></span></div>
+            <i class="fas fa-user-graduate"></i>
         </div>
     </div>
 
-    <!-- Gráfico de distribuição de usuários -->
-    <div class="section">
-        <h2>📊 Distribuição de Usuários</h2>
-        <div class="grafico-container">
-            <canvas id="graficoUsuarios" width="400" height="400"></canvas>
-        </div>
+    <!-- FORMULÁRIOS DE INSERÇÃO (sempre visíveis) -->
+
+    <!-- Inserir Administrador -->
+    <div class="form-container" id="novoAdm">
+        <h3><i class="fas fa-plus-circle"></i> Novo Administrador</h3>
+        <form action="<%= request.getContextPath() %>/adm" method="post">
+            <input type="hidden" name="acao" value="inserirUsuario">
+            <input type="hidden" name="tipo" value="adm">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Senha:</label>
+                <input type="password" name="senha" required>
+            </div>
+            <button type="submit" class="btn btn-edit">Salvar</button>
+        </form>
     </div>
 
-    <!-- Seção de cadastro -->
-    <div class="section">
-        <h2>➕ Cadastrar Usuário</h2>
-        <div class="form-cadastro">
-            <form action="${pageContext.request.contextPath}/adm" method="post">
-                <input type="hidden" name="acao" value="inserirUsuario">
-                <div class="form-row">
-                    <label for="tipoUsuario">Tipo de usuário:</label>
-                    <select id="tipoUsuario" name="tipo" onchange="mostrarCampos()" required>
-                        <option value="">Selecione</option>
-                        <option value="adm">Administrador</option>
-                        <option value="professor">Professor</option>
-                        <option value="aluno">Aluno</option>
-                    </select>
-                </div>
+    <!-- Inserir Professor -->
+    <div class="form-container" id="novoProfessor">
+        <h3><i class="fas fa-plus-circle"></i> Novo Professor</h3>
+        <form action="<%= request.getContextPath() %>/adm" method="post">
+            <input type="hidden" name="acao" value="inserirUsuario">
+            <input type="hidden" name="tipo" value="professor">
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nomeProfessor" required>
+            </div>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" name="usernameProfessor" required>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="emailProfessor" required>
+            </div>
+            <div class="form-group">
+                <label>Senha:</label>
+                <input type="password" name="senhaProfessor" required>
+            </div>
+            <div class="form-group">
+                <label>ID Disciplina:</label>
+                <input type="number" name="idDisciplina" required>
+            </div>
+            <button type="submit" class="btn btn-edit">Salvar</button>
+        </form>
+    </div>
 
-                <!-- Formulários dinâmicos -->
-                <div id="formAdm" class="dynamic-form" style="display:none;">
-                    <h3>Administrador</h3>
-                    <input name="username" placeholder="Username"><br>
-                    <input name="email" type="email" placeholder="E-mail"><br>
-                    <input name="senha" type="password" placeholder="Senha"><br>
-                </div>
+    <!-- Inserir Aluno -->
+    <div class="form-container" id="novoAluno">
+        <h3><i class="fas fa-plus-circle"></i> Novo Aluno</h3>
+        <form action="<%= request.getContextPath() %>/adm" method="post">
+            <input type="hidden" name="acao" value="inserirUsuario">
+            <input type="hidden" name="tipo" value="aluno">
+            <div class="form-group">
+                <label>Matrícula:</label>
+                <input type="text" name="matricula" required>
+            </div>
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label>Senha:</label>
+                <input type="password" name="senha" required>
+            </div>
+            <button type="submit" class="btn btn-edit">Salvar</button>
+        </form>
+    </div>
 
-                <div id="formProfessor" class="dynamic-form" style="display:none;">
-                    <h3>Professor</h3>
-                    <input name="nomeProfessor" placeholder="Nome completo"><br>
-                    <input name="usernameProfessor" placeholder="Username"><br>
-                    <input name="emailProfessor" type="email" placeholder="E-mail"><br>
-                    <input name="senhaProfessor" type="password" placeholder="Senha"><br>
-                    <input name="idDisciplina" placeholder="ID da Disciplina"><br>
-                </div>
+    <!-- TABELA ADMINISTRADORES -->
+    <h2 class="titulo" id="admins"><i class="fas fa-user-shield"></i> Administradores</h2>
+    <div class="tabela-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+            <%
+                List<Adm> listaAdm = (List<Adm>) request.getAttribute("listaAdm");
+                if(listaAdm != null) {
+                    for(Adm a : listaAdm) {
+            %>
+            <tr>
+                <td><%= a.getId() %></td>
+                <td><%= a.getUsername() %></td>
+                <td><%= a.getEmail() %></td>
+                <td>
+                    <!-- Form para editar (abre o formulário abaixo com os dados) -->
+                    <button class="btn btn-edit" onclick="editarAdm('<%= a.getId() %>', '<%= a.getUsername() %>', '<%= a.getEmail() %>')">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
 
-                <div id="formAluno" class="dynamic-form" style="display:none;">
-                    <h3>Aluno</h3>
-                    <input name="matricula" placeholder="Matrícula"><br>
-                    <input name="nome" placeholder="Nome"><br>
-                    <input name="username" placeholder="Username"><br>
-                    <input name="email" placeholder="Email"><br>
-                    <input name="senha" placeholder="Senha"><br>
-                </div>
+                    <!-- Form para excluir -->
+                    <form action="<%= request.getContextPath() %>/adm" method="post" style="display:inline;">
+                        <input type="hidden" name="acao" value="removerAdm">
+                        <input type="hidden" name="id" value="<%= a.getId() %>">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Remover administrador?')">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            <%
+                    }
+                }
+            %>
+        </table>
 
-                <button type="submit" class="btn" style="margin-top: 20px;">Salvar</button>
+        <!-- Formulário de edição de admin (escondido, aparece ao clicar em editar) -->
+        <div id="formEditarAdm" style="display:none; margin-top:20px; padding:15px; background:#f0f0f0; border-radius:5px;">
+            <h4>Editar Administrador</h4>
+            <form action="<%= request.getContextPath() %>/adm" method="post">
+                <input type="hidden" name="acao" value="editarAdm">
+                <input type="hidden" name="idAdm" id="editAdmId">
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" name="username" id="editAdmUsername">
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" id="editAdmEmail">
+                </div>
+                <div class="form-group">
+                    <label>Nova Senha (deixe em branco para não alterar):</label>
+                    <input type="password" name="senha">
+                </div>
+                <button type="submit" class="btn btn-edit">Salvar</button>
+                <button type="button" class="btn btn-delete" onclick="document.getElementById('formEditarAdm').style.display='none'">Cancelar</button>
             </form>
         </div>
     </div>
 
-    <!-- Tabela de Administradores -->
-    <div class="section">
-        <h2>👥 Administradores cadastrados</h2>
-        <%
-            List<Adm> lista = (List<Adm>) request.getAttribute("listaAdm");
-            if (lista != null && !lista.isEmpty()) {
-        %>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Senha</th>
-                    <th>Editar</th>
-                    <th>Excluir</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (Adm adm : lista) { %>
-                <tr>
-                    <form action="${pageContext.request.contextPath}/adm" method="post">
-                        <td><%= adm.getId() %><input type="hidden" name="idAdm" value="<%= adm.getId() %>"></td>
-                        <td><input type="text" name="username" value="<%= adm.getUsername() %>"></td>
-                        <td><input type="email" name="email" value="<%= adm.getEmail() %>"></td>
-                        <td><input type="password" name="senha" placeholder="Nova senha"></td>
-                        <td>
-                            <input type="hidden" name="acao" value="editarAdm">
-                            <button type="submit" class="btn-tabela editar" title="Salvar alterações">💾</button>
-                        </td>
+    <!-- TABELA PROFESSORES -->
+    <h2 class="titulo" id="professores"><i class="fas fa-user-tie"></i> Professores</h2>
+    <div class="tabela-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>ID Disciplina</th>
+                <th>Ações</th>
+            </tr>
+            <%
+                List<Professor> listaProf = (List<Professor>) request.getAttribute("listaProf");
+                if(listaProf != null) {
+                    for(Professor p : listaProf) {
+            %>
+            <tr>
+                <td><%= p.getId() %></td>
+                <td><%= p.getNome() %></td>
+                <td><%= p.getUsername() %></td>
+                <td><%= p.getEmail() %></td>
+                <td><%= p.getIdDisciplina() %></td>
+                <td>
+                    <!-- Botão Editar Professor (abre formulário) -->
+                    <button class="btn btn-edit" onclick="editarProf('<%= p.getId() %>', '<%= p.getSenha() %>')">
+                        <i class="fas fa-edit"></i> Editar Senha
+                    </button>
+
+                    <!-- Form para excluir -->
+                    <form action="<%= request.getContextPath() %>/adm" method="post" style="display:inline;">
+                        <input type="hidden" name="acao" value="removerProfessor">
+                        <input type="hidden" name="idProf" value="<%= p.getId() %>">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Remover professor?')">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
                     </form>
-                    <td>
-                        <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
-                            <input type="hidden" name="acao" value="removerAdm">
-                            <input type="hidden" name="id" value="<%= adm.getId() %>">
-                            <button type="submit" class="btn-tabela excluir" onclick="return confirm('Tem certeza que deseja excluir?')" title="Excluir">🗑️</button>
-                        </form>
-                    </td>
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
+                </td>
+            </tr>
+            <%
+                    }
+                }
+            %>
+        </table>
+
+        <!-- Formulário de edição de professor -->
+        <div id="formEditarProf" style="display:none; margin-top:20px; padding:15px; background:#f0f0f0; border-radius:5px;">
+            <h4>Editar Senha do Professor</h4>
+            <form action="<%= request.getContextPath() %>/adm" method="post">
+                <input type="hidden" name="acao" value="editarProfessor">
+                <input type="hidden" name="idProf" id="editProfId">
+                <div class="form-group">
+                    <label>Nova Senha:</label>
+                    <input type="password" name="senha" id="editProfSenha" required>
+                </div>
+                <button type="submit" class="btn btn-edit">Salvar</button>
+                <button type="button" class="btn btn-delete" onclick="document.getElementById('formEditarProf').style.display='none'">Cancelar</button>
+            </form>
         </div>
-        <% } else { %>
-        <p style="color: #5e7a99;">Nenhum administrador cadastrado.</p>
-        <% } %>
     </div>
 
-    <!-- Tabela de Professores -->
-    <div class="section">
-        <h2>👩‍🏫 Professores cadastrados</h2>
-        <%
-            List<Professor> professores = (List<Professor>) request.getAttribute("listaProf");
-            if (professores != null && !professores.isEmpty()) {
-        %>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Senha</th>
-                    <th>ID_Disciplina</th>
-                    <th>Editar</th>
-                    <th>Excluir</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (Professor prof : professores) { %>
-                <tr>
-                    <form action="${pageContext.request.contextPath}/adm" method="post">
-                        <td><%= prof.getId() %><input type="hidden" name="idProf" value="<%= prof.getId() %>"></td>
-                        <td><input type="text" name="nome" value="<%= prof.getNome() %>"></td>
-                        <td><input type="text" name="username" value="<%= prof.getUsername() %>"></td>
-                        <td><input type="email" name="email" value="<%= prof.getEmail() %>"></td>
-                        <td><input type="password" name="senha" placeholder="Nova senha"></td>
-                        <td><input type="text" name="idDisciplina" value="<%= prof.getIdDisciplina() %>"></td>
-                        <td>
-                            <input type="hidden" name="acao" value="editarProfessor">
-                            <button type="submit" class="btn-tabela editar" title="Salvar alterações">💾</button>
-                        </td>
+    <!-- TABELA ALUNOS -->
+    <h2 class="titulo" id="alunos"><i class="fas fa-user-graduate"></i> Alunos</h2>
+    <div class="tabela-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+            <%
+                List<Aluno> listaAluno = (List<Aluno>) request.getAttribute("listaAluno");
+                if(listaAluno != null) {
+                    for(Aluno a : listaAluno) {
+            %>
+            <tr>
+                <td><%= a.getId() %></td>
+                <td><%= a.getMatricula() %></td>
+                <td><%= a.getNome() %></td>
+                <td><%= a.getUsername() %></td>
+                <td><%= a.getEmail() %></td>
+                <td>
+                    <!-- Botão Editar Aluno (abre formulário) -->
+                    <button class="btn btn-edit" onclick="editarAluno('<%= a.getId() %>', '<%= a.getNome() %>', '<%= a.getUsername() %>', '<%= a.getEmail() %>', '<%= a.getMatricula() %>')">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <!-- Form para excluir -->
+                    <form action="<%= request.getContextPath() %>/adm" method="post" style="display:inline;">
+                        <input type="hidden" name="acao" value="removerAluno">
+                        <input type="hidden" name="idAluno" value="<%= a.getId() %>">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Remover aluno?')">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
                     </form>
-                    <td>
-                        <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
-                            <input type="hidden" name="acao" value="removerProfessor">
-                            <input type="hidden" name="idProf" value="<%= prof.getId() %>">
-                            <button type="submit" class="btn-tabela excluir" onclick="return confirm('Tem certeza que deseja excluir?')" title="Excluir">🗑️</button>
-                        </form>
-                    </td>
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
+
+                </td>
+            </tr>
+            <%
+                    }
+                }
+            %>
+        </table>
+
+        <!-- Formulário de edição de aluno -->
+        <div id="formEditarAluno" style="display:none; margin-top:20px; padding:15px; background:#f0f0f0; border-radius:5px;">
+            <h4>Editar Aluno</h4>
+            <form action="<%= request.getContextPath() %>/adm" method="post">
+                <input type="hidden" name="acao" value="editarAluno">
+                <input type="hidden" name="idAluno" id="editAlunoId">
+                <div class="form-group">
+                    <label>Matrícula:</label>
+                    <input type="text" name="matricula" id="editAlunoMatricula" required>
+                </div>
+                <div class="form-group">
+                    <label>Nome:</label>
+                    <input type="text" name="nome" id="editAlunoNome" required>
+                </div>
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" name="username" id="editAlunoUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" id="editAlunoEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Nova Senha (deixe em branco para não alterar):</label>
+                    <input type="password" name="senha">
+                </div>
+                <button type="submit" class="btn btn-edit">Salvar</button>
+                <button type="button" class="btn btn-delete" onclick="document.getElementById('formEditarAluno').style.display='none'">Cancelar</button>
+            </form>
         </div>
-        <% } else { %>
-        <p style="color: #5e7a99;">Nenhum professor cadastrado.</p>
-        <% } %>
     </div>
-    <div class="section">
-        <h2>👥 Alunos cadastrados</h2>
-        <%
-            List<Aluno> listaAluno = (List<Aluno>) request.getAttribute("listaAluno");
-            if (listaAluno != null && !listaAluno.isEmpty()) {
-        %>
-        <div class="table-responsive">
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Matricula</th>
-                    <th>Nome</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Senha</th>
-                </tr>
-                </thead>
-                <tbody>
-                <% for (Aluno aluno : listaAluno) { %>
-                <tr>
-                    <form action="${pageContext.request.contextPath}/adm" method="post">
-                        <td><%= aluno.getId() %><input type="hidden" name="idAluno" value="<%= aluno.getId() %>"></td>
-                        <td><input type="text" name="matricula" value="<%= aluno.getMatricula() %>"></td>
-                        <td><input type="text" name="nome" value="<%= aluno.getNome() %>"></td>
-                        <td><input type="text" name="username" value="<%= aluno.getUsername() %>"></td>
-                        <td><input type="email" name="email" value="<%= aluno.getEmail() %>"></td>
-                        <td><input type="password" name="senha" placeholder="Nova senha"></td>
-                        <td>
-                            <input type="hidden" name="acao" value="editarAluno">
-                            <button type="submit" class="btn-tabela editar" title="Salvar alterações">💾</button>
-                        </td>
-                    </form>
-                    <td>
-                        <form action="${pageContext.request.contextPath}/adm" method="post" style="display:inline;">
-                            <input type="hidden" name="acao" value="removerAluno">
-                            <input type="hidden" name="id" value="<%= aluno.getId() %>">
-                            <button type="submit" class="btn-tabela excluir" onclick="return confirm('Tem certeza que deseja excluir?')" title="Excluir">🗑️</button>
-                        </form>
-                    </td>
-                </tr>
-                <% } %>
-                </tbody>
-            </table>
-        </div>
-        <% } else { %>
-        <p style="color: #5e7a99;">Nenhum aluno cadastrado.</p>
-        <% } %>
+
+    <div style="text-align:center; color:#999; margin-top:30px;">
+        Painel Administrativo
     </div>
 </div>
 
-<!-- Script para exibir/ocultar formulários (original) -->
 <script>
-    function mostrarCampos() {
-        const tipo = document.getElementById("tipoUsuario").value;
-        document.getElementById("formAdm").style.display = "none";
-        document.getElementById("formProfessor").style.display = "none";
-        document.getElementById("formAluno").style.display = "none";
+    // Funções para editar (só preenchem os formulários)
+    function editarAdm(id, username, email) {
+        document.getElementById('editAdmId').value = id;
+        document.getElementById('editAdmUsername').value = username;
+        document.getElementById('editAdmEmail').value = email;
+        document.getElementById('formEditarAdm').style.display = 'block';
+    }
 
-        if (tipo === "adm") {
-            document.getElementById("formAdm").style.display = "block";
-        } else if (tipo === "professor") {
-            document.getElementById("formProfessor").style.display = "block";
-        } else if (tipo === "aluno") {
-            document.getElementById("formAluno").style.display = "block";
-        }
+    function editarProf(id, senha) {
+        document.getElementById('editProfId').value = id;
+        document.getElementById('editProfSenha').value = '';
+        document.getElementById('formEditarProf').style.display = 'block';
+    }
+
+    function editarAluno(id, nome, username, email, matricula) {
+        document.getElementById('editAlunoId').value = id;
+        document.getElementById('editAlunoNome').value = nome;
+        document.getElementById('editAlunoUsername').value = username;
+        document.getElementById('editAlunoEmail').value = email;
+        document.getElementById('editAlunoMatricula').value = matricula;
+        document.getElementById('formEditarAluno').style.display = 'block';
     }
 </script>
 
-<!-- Script para gerar o gráfico -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Recupera os valores das variáveis disponíveis no JSP (EL)
-        const totalAdm = ${totalAdm != null ? totalAdm : 0};
-        const totalProf = ${totalProf != null ? totalProf : 0};
-        const totalUsers = ${totalUsers != null ? totalUsers : 0};
-        const totalAlunos = totalUsers - totalAdm - totalProf; // calcula alunos (se houver)
-
-        // Garante que não haja valor negativo (caso haja inconsistência)
-        const alunos = totalAlunos > 0 ? totalAlunos : 0;
-
-        const ctx = document.getElementById('graficoUsuarios').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie', // pode ser 'doughnut' ou 'bar' se preferir
-            data: {
-                labels: ['Administradores', 'Professores', 'Alunos'],
-                datasets: [{
-                    data: [totalAdm, totalProf, alunos],
-                    backgroundColor: ['#1976D2', '#42A5F5', '#90CAF9'],
-                    borderColor: '#ffffff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#1e2b3c', font: { size: 14 } }
-                    },
-                    tooltip: { enabled: true }
-                }
-            }
-        });
-    });
-</script>
 </body>
 </html>
