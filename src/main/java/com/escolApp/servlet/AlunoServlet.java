@@ -348,7 +348,7 @@ public class AlunoServlet extends HttpServlet {
             double media = (resumo.getN1() + resumo.getN2()) / 2;
             resumo.setMedia(media);
 
-            if (media >= 6.0) {
+            if (media >= 7.0) {
                 resumo.setSituacao("Aprovado");
             } else if (media >= 4.0) {
                 resumo.setSituacao("Recuperação");
