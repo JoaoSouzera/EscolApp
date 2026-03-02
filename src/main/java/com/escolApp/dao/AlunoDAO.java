@@ -419,4 +419,42 @@ public class AlunoDAO {
         }
     }
 
+    public Aluno autenticar(String username, String senha) {
+        Conexao conexao = new Conexao();
+        Aluno aluno = null;
+
+        String sql = "SELECT * FROM aluno WHERE username = ? AND senha = ?";
+
+        try {
+            Connection conn = conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setString(1, username);
+            stmt.setString(2, senha);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                aluno = new Aluno(
+                        rs.getInt("id"),
+                        rs.getString("matricula"),
+                        rs.getString("nome"),
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("senha")
+                );
+            }
+
+            rs.close();
+            stmt.close();
+            conexao.desconectar(conn);
+
+            return aluno;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

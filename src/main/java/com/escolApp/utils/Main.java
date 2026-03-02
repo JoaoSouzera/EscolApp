@@ -2,8 +2,10 @@ package com.escolApp.utils;
 
 import com.escolApp.conexao.Conexao;
 import com.escolApp.dao.AdmDAO;
+import com.escolApp.dao.AlunoDAO;
 import com.escolApp.dao.NotaDAO;
 import com.escolApp.dao.ProfessorDAO;
+import com.escolApp.model.Aluno;
 import com.escolApp.model.Nota;
 import com.escolApp.model.Professor;
 
@@ -13,17 +15,16 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//        System.out.println(System.getenv("DB_URL"));
-//        Conexao con1 = new Conexao();
-//        if(con1.conectar() == null){
-//            System.out.println("Não conectou");
-//            System.out.println(con1.conectar());
-//        }
-//        else {
-//            System.out.println("Conectou");
-//            System.out.println(con1.conectar());
-//        }
-//        con1.desconectar(con1.conectar());
+        System.out.println(System.getenv("DB_URL"));
+        Conexao con1 = new Conexao();
+        if(con1.conectar() == null){
+            System.out.println("Não conectou");
+            System.out.println(con1.conectar());
+        }
+        else {
+            System.out.println("Conectou");
+            System.out.println(con1.conectar());
+        }
 
 
 //        ProfessorDAO prof = new ProfessorDAO();
@@ -83,6 +84,10 @@ public class Main {
 
         AdmDAO adm = new AdmDAO();
 
-        System.out.println(adm.buscarAdm());
+        AlunoDAO aluno = new AlunoDAO();
+
+        System.out.println(aluno.buscar());
+
+
     }
 }
