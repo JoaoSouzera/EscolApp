@@ -23,12 +23,13 @@
         }
 
         .sidebar {
-            width: 260px;
+            width: 16rem;
             background-color: #1e2b3f;
             color: white;
-            height: 100vh;
-            position: fixed;
+            height: 100%;
+            position:fixed;
             padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -36,25 +37,28 @@
             font-size: 24px;
             font-weight: bold;
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
         }
 
         .logo i {
             margin-right: 10px;
-            color: #4CAF50;
+            color: #22308D;
         }
 
         .menu-item {
-            padding: 12px 25px;
+            padding: 0.5rem 1rem 0.5rem 2rem;
             display: flex;
             align-items: center;
             color: rgba(255,255,255,0.8);
+            transition: all 0.3s;
             cursor: pointer;
+            margin: 5px 0;
         }
 
         .menu-item:hover, .menu-item.active {
             background-color: rgba(255,255,255,0.1);
             color: white;
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #22308D;
         }
 
         .menu-item i {
@@ -101,7 +105,7 @@
             padding: 25px;
             margin-bottom: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #22308D;
             transition: transform 0.3s;
         }
 
@@ -126,7 +130,7 @@
         }
 
         .disciplina i {
-            color: #4CAF50;
+            color: #22308D;
             margin-right: 8px;
         }
 
@@ -140,7 +144,7 @@
         }
 
         .professor {
-            color: #4CAF50;
+            color: #22308D;
             font-weight: 500;
             margin-top: 10px;
             font-size: 14px;
@@ -167,7 +171,7 @@
 
         .sem-observacoes i {
             font-size: 64px;
-            color: #4CAF50;
+            color: #22308D;
             margin-bottom: 20px;
         }
 
