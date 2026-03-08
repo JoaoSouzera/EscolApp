@@ -1,0 +1,207 @@
+body {
+    margin: 0;
+    top: 0;
+    background-color: #22308D;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+}
+header {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0055BD;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    border-radius: 70px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.8);
+    z-index: 10;
+    width: 50%;
+}
+header a {
+    list-style: none;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    transition: color 0.5s ease;
+}
+header a:hover {
+    color: #cdcdcd;
+}
+.mainvideo {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.inicio {
+    background-color: #22308D;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 8%;
+    height: 100vh;
+    position: relative;
+}
+.inicio h1 {
+    font-size: 45px;
+    width: 450px;
+    margin-bottom: 30px;
+}
+.inicio p {
+    font-size: 18px;
+    width: 450px;
+    margin-bottom: 40px;
+}
+.conhecaagora {
+    display: block;
+}
+button {
+    background-color: #5849E2;
+    color: white;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    height: 60px;
+    width: 220px;
+    font-size: 18px;
+    font-family: "Montserrat", sans-serif;
+}
+button:hover {
+    transition: 0.5s ease;
+    transform: scale(1.1);
+    background-color: #564cb7;
+}
+.pcerodas {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50%;
+}
+#student {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.alunoeondas, .profeondas {
+    width: 100%;
+    display: block;
+}
+.content {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    width: 40%;
+}
+#student .content {
+    top: 50%;
+    left: 60%;
+    transform: translateY(-50%);
+    text-align: left;
+}
+#teacher .content {
+    left: 5%;
+    transform: translateY(70%);
+    text-align: left;
+}
+.alunoeondas {
+    z-index: 1;
+}
+.profeondas {
+    position: relative;
+    transform: translateY(-12%);
+    z-index: -2;
+}
+h1 {
+    font-size: 2rem; 
+    margin-bottom: 10px; 
+}
+p { 
+    font-size: 1.1rem; 
+    line-height: 1.5; 
+}
+#diferenciais {
+    color: #ffffff;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: start;
+    padding-top: 50px;
+}
+#diferenciais h1 {
+    grid-column: 1 / -1;
+    margin-bottom: 60px;
+}
+.cards {
+    background-color: white;
+    width: 50%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 200px;
+}
+.cards h3 {
+    color: #0055BD;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+.cards p {
+    color: #0055BD;
+    font-size: 20px;
+}
+.cards:hover {
+    transition: 0.5s ease;
+    transform: scale(1.1);
+}
+footer {
+    position: relative;
+    color: #0055BD;
+}
+.waveft {
+    width: 100%;
+    display: block;
+}
+footer h1 {
+    position: absolute;
+    top: 60px;
+    left: 80px;
+}
+footer p {
+    position: absolute;
+    top: 120px;
+    left: 80px;
+}
+.lgft {
+    position: absolute;
+    top: 70%;
+    left: 500px;
+    transform: translateX(-50%);
+}
+.dscft {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+footer .mais {
+    position: absolute;
+    right: 120px;
+    bottom: 120px;
+    display: flex;
+    gap: 3rem;
+}
