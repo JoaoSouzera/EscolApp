@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('assets/fundo.png');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.folha {
+    position: relative;
+    width: 400px;
+    height: 700px;
+    background-image: url('assets/folha404.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.folha h1,
+.folha p,
+.folha a {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: red;
+    width: 80%;
+}
+.folha h1 {
+    top: 200px;
+    width: 70%;
+}
+.folha p {
+    top: 300px;
+}
+.folha a {
+    bottom: 120px;
+}

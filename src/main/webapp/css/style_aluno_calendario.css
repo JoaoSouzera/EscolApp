@@ -1,0 +1,176 @@
+:root {
+    --primary-blue: #5D5FEF;
+    --bg-gray: #F5F7FB;
+    --text-dark: #333;
+    --green-badge: #52B788;
+    --orange-badge: #F4A261;
+}
+
+body {
+    display: flex;
+    background-color: var(--bg-gray);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+main{
+    display: flex;
+    flex: 1;
+    padding: 40px;
+    gap: 30px;
+}
+
+/* --- Calendário --- */
+.calendario-section {
+    flex: 2;
+}
+
+.calendario-header h1 {
+    font-size: 24px;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.calendario-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.seletor-meses{
+    background: white;
+    color: var(--text-dark);
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.etiqueta {
+    padding: 8px 15px;
+    border-radius: 8px;
+    color: white;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.etiqueta-provas { background-color: var(--green-badge); }
+.etiqueta-reuniao { background-color: var(--orange-badge); }
+.etiqueta-eventos { background-color: var(--primary-blue); }
+
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.day-header {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.day-cell {
+    color: var(--text-dark);
+    height: 100px;
+    padding: 10px;
+    border: 0.5px solid #E0E0E0;
+    font-size: 14px;
+    position: relative;
+}
+
+.next-month {
+    background-color: #F0F2F5;
+    color: #A0A0A0;
+}
+
+.dia-atual{
+    background-color: #FFFDE7;
+}
+
+.dia-atual::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #FFEB3B;
+    right: 5px;
+    bottom: 5px;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+    transform: rotate(-5deg);
+}
+
+.btn-voltar {
+    margin-top: 20px;
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* --- Painel de Eventos --- */
+.events-panel {
+    flex: 1;
+    max-width: 350px;
+    color: var(--text-dark);
+}
+
+.event-filter {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.events-card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.event-date-title {
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.event-item {
+    margin-bottom: 20px;
+}
+
+.event-day {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.event-tag {
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    display: inline-block;
+}
+
+.tag-purple { background-color: #7B61FF; }
+.tag-green { background-color: #4CAF50; }
+
+.event-time {
+    display: block;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
