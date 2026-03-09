@@ -1,6 +1,6 @@
 # 📚 EscolApp
 
-Aplicação web desenvolvida para auxiliar na **gestão escolar**, permitindo o gerenciamento de alunos, professores, turmas e informações acadêmicas em um ambiente centralizado.
+Aplicação web desenvolvida para auxiliar na **gestão escolar**, permitindo o gerenciamento de alunos, professores e informações acadêmicas em um ambiente centralizado.
 
 O objetivo do projeto é **simplificar processos administrativos escolares**, reduzir burocracias e organizar dados acadêmicos de forma estruturada e acessível.
 
