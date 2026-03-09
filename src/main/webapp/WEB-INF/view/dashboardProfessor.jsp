@@ -20,6 +20,8 @@
 
         body {
             background: #f0f2f5;
+            height: 100%;
+            min-height: 100vh;
             display: flex;
         }
 
@@ -27,6 +29,7 @@
         .menu {
             width: 250px;
             background: #1e2b3f;
+            height: 100%;
             color: white;
             min-height: 100vh;
             position: fixed;

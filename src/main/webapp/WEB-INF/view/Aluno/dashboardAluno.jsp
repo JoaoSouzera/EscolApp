@@ -22,17 +22,18 @@
         }
 
         body {
+            height: 100%;
             background-color: #f4f7fc;
+            min-height: 100vh;
             display: flex;
         }
-
         /* Sidebar */
         .sidebar {
-            width: 260px;
+            width: 16rem;
             background-color: #1e2b3f;
             color: white;
-            height: 100vh;
-            position: fixed;
+            height: 100%;
+            position:fixed;
             padding: 20px 0;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
@@ -47,11 +48,11 @@
 
         .logo i {
             margin-right: 10px;
-            color: #4CAF50;
+            color: #22308D;
         }
 
         .menu-item {
-            padding: 12px 25px;
+            padding: 0.5rem 1rem 0.5rem 2rem;
             display: flex;
             align-items: center;
             color: rgba(255,255,255,0.8);
@@ -63,7 +64,7 @@
         .menu-item:hover, .menu-item.active {
             background-color: rgba(255,255,255,0.1);
             color: white;
-            border-left: 4px solid #4CAF50;
+            border-left: 5px solid #22308D;
         }
 
         .menu-item i {
@@ -142,7 +143,7 @@
 
         .card i {
             font-size: 48px;
-            color: #4CAF50;
+            color: #22308D;
             opacity: 0.8;
         }
 
@@ -187,7 +188,7 @@
         }
 
         .dados-aluno i {
-            color: #4CAF50;
+            color: #22308D;
             width: 20px;
         }
 
@@ -211,7 +212,7 @@
         }
 
         .table-container h3 i {
-            color: #4CAF50;
+            color: #22308D;
         }
 
         table {
@@ -279,7 +280,7 @@
 
         .observacao-item {
             background-color: #f8f9fa;
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #22308D;
             padding: 20px;
             margin-bottom: 15px;
             border-radius: 8px;
