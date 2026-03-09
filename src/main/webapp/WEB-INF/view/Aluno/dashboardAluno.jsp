@@ -501,12 +501,12 @@
                 <tr>
                     <td><%= nomeDisciplina %></td>
                     <td>
-                                <span class="badge <%= n.getN1() >= 6 ? "badge-success" : "badge-danger" %>">
+                                <span class="badge <%= n.getN1() >= 7 ? "badge-success" : "badge-danger" %>">
                                     <%= n.getN1() %>
                                 </span>
                     </td>
                     <td>
-                                <span class="badge <%= n.getN2() >= 6 ? "badge-success" : "badge-danger" %>">
+                                <span class="badge <%= n.getN2() >= 7 ? "badge-success" : "badge-danger" %>">
                                     <%= n.getN2() %>
                                 </span>
                     </td>

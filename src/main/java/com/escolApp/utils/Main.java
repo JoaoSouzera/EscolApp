@@ -86,7 +86,9 @@ public class Main {
 
         AlunoDAO aluno = new AlunoDAO();
 
-        System.out.println(aluno.buscar());
+        ProfessorDAO pro = new ProfessorDAO();
+
+        System.out.println(pro.buscarProfessores());
 
 
     }
