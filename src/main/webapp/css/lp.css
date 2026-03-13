@@ -42,7 +42,7 @@ video {
     height: 100%;
     object-fit: cover;
 }
-.inicio {
+#inicio {
     background-color: #22308D;
     color: white;
     display: flex;
@@ -53,12 +53,12 @@ video {
     height: 100vh;
     position: relative;
 }
-.inicio h1 {
+#inicio h1 {
     font-size: 45px;
     width: 450px;
     margin-bottom: 30px;
 }
-.inicio p {
+#inicio p {
     font-size: 18px;
     width: 450px;
     margin-bottom: 40px;

@@ -19,6 +19,16 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate(); // destrói sessão
         }
 
-        response.sendRedirect("index.jsp");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        response.sendRedirect("login.jsp");
+    }
+
+    // TAMBÉM TRATAR REQUISIÇÕES POST (POR SEGURANÇA)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+        doGet(request, response);
     }
 }

@@ -88,7 +88,7 @@ public class Main {
 
         ProfessorDAO pro = new ProfessorDAO();
 
-        System.out.println(pro.buscarProfessores());
+        System.out.println(adm.buscarAdm());
 
 
     }

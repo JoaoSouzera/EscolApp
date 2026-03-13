@@ -219,7 +219,7 @@ public class AlunoServlet extends HttpServlet {
             item.setMedia(media);
 
             // Definir situação
-            if (media >= 6.0) {
+            if (media >= 7.0) {
                 item.setSituacao("Aprovado");
             } else if (media >= 4.0) {
                 item.setSituacao("Recuperação");

@@ -476,9 +476,10 @@
                                 }
                             }
                         }
-                        double media = (n.getN1() + n.getN2()) / 2;
-                        String situacao = media >= 6 ? "Aprovado" : "Recuperação";
-                        String corSituacao = media >= 6 ? "#2e7d32" : "#b85c00";
+                        double media = (n.getN1() + n.getN2()) / 2; // não é dividido por dois e sim pela quantidade de notas, assim da pra deixar indefinido
+
+                        String situacao = media >= 7 ? "Aprovado" : "Recuperação";
+                        String corSituacao = media >= 7 ? "#2e7d32" : "#b85c00";
             %>
             <tr>
                 <td><%= n.getId() %></td>
