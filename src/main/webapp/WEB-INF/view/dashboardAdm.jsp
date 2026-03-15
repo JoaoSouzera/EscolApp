@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <title>Painel Administrativo</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="icon" href="../WEB-INF/assets/images/logo_escolApp.png">
     <style>
         * {
             margin: 0;
@@ -56,7 +57,10 @@
         .menu a i {
             width: 25px;
         }
-
+        .menu-item > h3 > i {
+            margin-right: 10px;
+            color: #2a3fbc;
+        }
         .divider {
             color: #8196b3;
             font-size: 12px;
@@ -120,12 +124,12 @@
 
         .card i {
             font-size: 35px;
-            color: #b9c7e4;
+            color:  #22308D;
         }
 
         .titulo {
             margin: 30px 0 15px;
-            color: #1e2a44;
+            color:  #22308D;
         }
 
         .msg {

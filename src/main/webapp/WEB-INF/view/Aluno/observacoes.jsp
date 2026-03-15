@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Observações - Sistema Escolar</title>
+    <link rel="icon" href="../WEB-INF/assets/images/logo_escolApp.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -23,13 +24,12 @@
         }
 
         .sidebar {
-            width: 16rem;
+            width: 260px;
             background-color: #1e2b3f;
             color: white;
-            height: 100%;
-            position:fixed;
+            height: 100vh;
+            position: fixed;
             padding: 20px 0;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -37,28 +37,25 @@
             font-size: 24px;
             font-weight: bold;
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 20px;
         }
 
         .logo i {
             margin-right: 10px;
-            color: #22308D;
+            color: #2a3fbc;
         }
 
         .menu-item {
-            padding: 0.5rem 1rem 0.5rem 2rem;
+            padding: 12px 25px;
             display: flex;
             align-items: center;
             color: rgba(255,255,255,0.8);
-            transition: all 0.3s;
             cursor: pointer;
-            margin: 5px 0;
         }
 
         .menu-item:hover, .menu-item.active {
             background-color: rgba(255,255,255,0.1);
             color: white;
-            border-left: 4px solid #22308D;
+            border-left: 4px solid #2a3fbc;
         }
 
         .menu-item i {
@@ -72,6 +69,7 @@
             width: 100%;
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 20px;
+            align-items: center;
         }
 
         .main-content {

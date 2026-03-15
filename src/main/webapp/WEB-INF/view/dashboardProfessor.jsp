@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <title>Painel do Professor</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="icon" href="../WEB-INF/assets/images/logo_escolApp.png">
     <style>
         * {
             margin: 0;
@@ -61,7 +62,10 @@
         .menu a i {
             width: 25px;
         }
-
+        .menu-item h3 i {
+            margin-right: 10px;
+            color: #2a3fbc;
+        }
         .divider {
             color: #8196b3;
             font-size: 12px;
@@ -122,12 +126,12 @@
         .card .numero {
             font-size: 28px;
             font-weight: bold;
-            color: #1e293b;
+            color:  #22308D;
         }
 
         .card i {
             font-size: 35px;
-            color: #b9c7e4;
+            color:  #22308D ;
         }
 
         /* Títulos das seções */
@@ -141,7 +145,7 @@
 
         .titulo i {
             font-size: 24px;
-            color: #687df0;
+            color:  #22308D;
             background: #e7ebfe;
             padding: 8px;
             border-radius: 8px;
@@ -313,7 +317,7 @@
 <!-- MENU LATERAL - mesmo padrão do ADM -->
 <div class="menu">
     <div class="menu-items">
-        <h3><i class="fas fa-school"></i> Professor</h3>
+        <h3><i class="fas fa-school" color="#22308D"></i> Professor</h3>
         <div class="divider">MENU</div>
         <a href="<%= request.getContextPath() %>/professor?acao=dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
         <div class="divider">MINHAS FUNÇÕES</div>

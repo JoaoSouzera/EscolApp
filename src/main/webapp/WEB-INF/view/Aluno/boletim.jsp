@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boletim - Sistema Escolar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="../../../imgs/logo_escolApp.png">
     <style>
         * {
             margin: 0;
@@ -39,7 +40,7 @@
 
         .logo i {
             margin-right: 10px;
-            color: #4CAF50;
+            color: #2a3fbc;
         }
 
         .menu-item {
@@ -53,7 +54,7 @@
         .menu-item:hover, .menu-item.active {
             background-color: rgba(255,255,255,0.1);
             color: white;
-            border-left: 4px solid #4CAF50;
+            border-left: 4px solid #2a3fbc;
         }
 
         .menu-item i {
@@ -67,6 +68,7 @@
             width: 100%;
             border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 20px;
+            align-items: center;
         }
 
         .main-content {
@@ -85,7 +87,7 @@
 
         .page-title i {
             margin-right: 15px;
-            color: #1e2b3f;
+            color: #2a3fbc;
             font-size: 32px;
         }
 
@@ -107,11 +109,13 @@
             color: #1e2b3f;
             font-size: 24px;
             margin-bottom: 10px;
+            cursor: pointer;
         }
 
         .cabecalho-boletim p {
             color: #666;
             font-size: 16px;
+            cursor: pointer;
         }
 
         .info-aluno {
@@ -131,7 +135,7 @@
         }
 
         .info-item i {
-            color: #4CAF50;
+            color: #2a3fbc;
             font-size: 20px;
         }
 
@@ -201,7 +205,7 @@
         .media-geral .valor {
             font-size: 36px;
             font-weight: bold;
-            color: #4CAF50;
+            color: #2a3fbc;
         }
 
         @media print {
@@ -324,7 +328,7 @@
         <% } %>
 
         <div style="margin-top: 30px; text-align: right;">
-            <button onclick="window.print()" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            <button onclick="window.print()" style="padding: 10px 20px; background-color: #2a3fbc; color: white; border: none; border-radius: 5px; cursor: pointer;">
                 <i class="fas fa-print"></i> Imprimir Boletim
             </button>
         </div>
