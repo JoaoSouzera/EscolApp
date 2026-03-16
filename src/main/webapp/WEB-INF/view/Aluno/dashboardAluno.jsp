@@ -11,98 +11,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Aluno - Sistema Escolar</title>
-    <link rel="icon" href="../WEB-INF/assets/images/logo_escolApp.png">
+    <title>Dashboard Aluno - EscolApp</title>
+    <link rel="icon" href="../../../fotos/logo_escolApp.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            height: 100%;
-            background-color: #f4f7fc;
-            min-height: 100vh;
+            background-color: #f0f2f5;
             display: flex;
+            height: 100%;
+            min-height: 100vh;
         }
-        /* Sidebar */
-        .sidebar {
-            width: 260px;
-            background-color: #1e2b3f;
+
+        /* Menu lateral - mesmo padrão do Professor */
+        .menu {
+            width: 250px;
+            background: #1e2b3f;
+            height: 100%;
             color: white;
-            height: 100vh;
+            min-height: 100vh;
             position: fixed;
-            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        .logo {
-            padding: 0 20px 30px 20px;
-            font-size: 24px;
-            font-weight: bold;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        .menu h3 {
+            padding: 20px;
+            border-bottom: 1px solid #334155;
         }
 
-        .logo i {
+        .menu h3 i {
             margin-right: 10px;
             color: #2a3fbc;
         }
 
-        .logout a {
-            color: #ffb3b3;
+        .menu .menu-items {
+            flex: 1;
         }
 
-        .logout a:hover {
-            background: #3b2a2a;
-            color: #ff6b6b;
+        .menu a {
+            display: block;
+            padding: 12px 20px;
+            color: #cbd5e1;
+            text-decoration: none;
         }
 
-        .logout i {
-            color: #ff8a8a
-        }
-        .menu-item {
-            padding: 12px 25px;
-            display: flex;
-            align-items: center;
-            color: rgba(255,255,255,0.8);
-            cursor: pointer;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background-color: rgba(255,255,255,0.1);
+        .menu a:hover {
+            background: #253040;
             color: white;
-            border-left: 4px solid #2a3fbc;
         }
 
-        .menu-item i {
+        .menu a i {
             width: 25px;
-            margin-right: 10px;
         }
 
-        .menu-item.logout {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-            align-items: center;
+        .divider {
+            color: #8196b3;
+            font-size: 12px;
+            padding: 15px 20px 5px;
         }
+
         /* Botão de logout */
-        .logout {
+        .logout-btn {
             margin-top: auto;
             border-top: 1px solid #334155;
         }
 
+        .logout-btn a {
+            color: #ffb3b3;
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+        }
 
+        .logout-btn a:hover {
+            background: #3b2a2a;
+            color: #ff6b6b;
+        }
+
+        .logout-btn i {
+            color: #ff8a8a;
+            width: 25px;
+        }
 
         /* Conteúdo principal */
         .main-content {
-            margin-left: 260px;
-            padding: 30px;
-            width: calc(100% - 260px);
-            background-color: #f4f7fc;
+            margin-left: 250px;
+            padding: 25px;
+            width: calc(100% - 250px);
+            background-color: #f0f2f5;
         }
 
         .page-title {
@@ -115,7 +118,7 @@
 
         .page-title i {
             margin-right: 15px;
-            color: #1e2b3f;
+            color: #2a3fbc;
             font-size: 32px;
         }
 
@@ -129,9 +132,9 @@
 
         .card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -140,25 +143,23 @@
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
         .card h4 {
-            color: #666;
+            color: #5e6f8d;
             font-size: 14px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
 
         .card .numero {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
-            color: #1e2b3f;
+            color: #22308D;
         }
 
         .card i {
-            font-size: 48px;
+            font-size: 35px;
             color: #22308D;
             opacity: 0.8;
         }
@@ -166,10 +167,10 @@
         /* Container de informações do aluno */
         .info-aluno {
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
             gap: 30px;
@@ -211,10 +212,10 @@
         /* Tabelas */
         .table-container {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             overflow-x: auto;
         }
 
@@ -224,7 +225,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .table-container h3 i {
@@ -240,13 +241,14 @@
             background-color: #f8f9fa;
             color: #1e2b3f;
             font-weight: 600;
-            padding: 15px 10px;
+            padding: 12px 10px;
             text-align: left;
             border-bottom: 2px solid #dee2e6;
+            font-size: 14px;
         }
 
         td {
-            padding: 15px 10px;
+            padding: 12px 10px;
             border-bottom: 1px solid #dee2e6;
             color: #555;
         }
@@ -259,7 +261,7 @@
             background-color: #f1f3f5;
         }
 
-        /* Badges */
+        /* Badges - NOVAS CORES para as notas */
         .badge {
             padding: 5px 10px;
             border-radius: 20px;
@@ -288,6 +290,22 @@
             color: #0c5460;
         }
 
+        /* NOVAS classes para notas específicas */
+        .nota-alta {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .nota-media {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .nota-baixa {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
         /* Lista de observações */
         .observacoes-list {
             max-height: 400px;
@@ -297,9 +315,9 @@
         .observacao-item {
             background-color: #f8f9fa;
             border-left: 4px solid #22308D;
-            padding: 20px;
+            padding: 15px;
             margin-bottom: 15px;
-            border-radius: 8px;
+            border-radius: 5px;
             transition: transform 0.3s;
         }
 
@@ -313,7 +331,7 @@
             justify-content: space-between;
             margin-bottom: 10px;
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .observacao-item .disciplina {
@@ -328,12 +346,13 @@
         .observacao-item .conteudo {
             color: #333;
             line-height: 1.6;
+            font-size: 14px;
         }
 
         /* Mensagens de feedback */
         .msg {
             padding: 15px 20px;
-            border-radius: 10px;
+            border-radius: 5px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
@@ -380,13 +399,13 @@
         }
 
         @media (max-width: 768px) {
-            .sidebar {
+            .menu {
                 width: 70px;
                 overflow: hidden;
             }
 
-            .sidebar .menu-item span,
-            .sidebar .logo span {
+            .menu a span,
+            .menu h3 span {
                 display: none;
             }
 
@@ -407,29 +426,20 @@
     </style>
 </head>
 <body>
-<!-- Sidebar -->
-<div class="sidebar">
-    <div class="logo">
-        <i class="fas fa-user-graduate"></i>
-        <span>Aluno</span>
+<!-- Menu lateral - mesmo padrão do Professor -->
+<div class="menu">
+    <div class="menu-items">
+        <h3><i class="fas fa-user-graduate"></i> Aluno</h3>
+        <div class="divider">MENU</div>
+        <a href="${pageContext.request.contextPath}/aluno/dashboard" style="background: #253040; color: white; border-left: 4px solid #2a3fbc;"><i class="fas fa-chart-pie"></i> Dashboard</a>
+        <div class="divider">ÁREA DO ALUNO</div>
+        <a href="${pageContext.request.contextPath}/aluno/boletim"><i class="fas fa-file-alt"></i> Boletim</a>
+        <a href="${pageContext.request.contextPath}/aluno/observacoes"><i class="fas fa-comment"></i> Observações</a>
     </div>
 
-    <div class="menu-item active" onclick="window.location.href='${pageContext.request.contextPath}/aluno/dashboard'">
-        <i class="fas fa-home"></i>
-        <span>Dashboard</span>
-    </div>
-    <div class="menu-item" onclick="window.location.href='${pageContext.request.contextPath}/aluno/boletim'">
-        <i class="fas fa-file-alt"></i>
-        <span>Boletim</span>
-    </div>
-    <div class="menu-item" onclick="window.location.href='${pageContext.request.contextPath}/aluno/observacoes'">
-        <i class="fas fa-comment"></i>
-        <span>Observações</span>
-    </div>
-
-    <div class="menu-item logout" onclick="window.location.href='${pageContext.request.contextPath}/logout'">
-        <i class="fas fa-sign-out-alt"></i>
-        <span>Sair</span>
+    <!-- Botão de logout -->
+    <div class="logout-btn">
+        <a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Sair do Sistema</a>
     </div>
 </div>
 
@@ -450,7 +460,7 @@
     <% } %>
 
     <div class="page-title">
-        <i class="fas fa-user-graduate"></i>
+        <i class="fas fa-chart-pie"></i>
         <h1>Dashboard do Aluno</h1>
     </div>
 
@@ -514,16 +524,32 @@
                     if(ultimasNotas != null && !ultimasNotas.isEmpty()) {
                         for(Nota n : ultimasNotas) {
                             String nomeDisciplina = mapaDisciplinas != null ? mapaDisciplinas.get(n.getIdDisciplina()) : "N/A";
+
+                            // Definir classe CSS para N1 baseado no valor
+                            String classeN1 = "nota-baixa";
+                            if (n.getN1() >= 7) {
+                                classeN1 = "nota-alta";
+                            } else if (n.getN1() >= 4) {
+                                classeN1 = "nota-media";
+                            }
+
+                            // Definir classe CSS para N2 baseado no valor
+                            String classeN2 = "nota-baixa";
+                            if (n.getN2() >= 7) {
+                                classeN2 = "nota-alta";
+                            } else if (n.getN2() >= 4) {
+                                classeN2 = "nota-media";
+                            }
                 %>
                 <tr>
                     <td><%= nomeDisciplina %></td>
                     <td>
-                                <span class="badge <%= n.getN1() >= 7 ? "badge-success" : "badge-danger" %>">
+                                <span class="badge <%= classeN1 %>">
                                     <%= n.getN1() %>
                                 </span>
                     </td>
                     <td>
-                                <span class="badge <%= n.getN2() >= 7 ? "badge-success" : "badge-danger" %>">
+                                <span class="badge <%= classeN2 %>">
                                     <%= n.getN2() %>
                                 </span>
                     </td>
