@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boletim - EscolApp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <link rel="icon" href="../../../fotos/logo_escolApp.png">
     <style>
         * {
@@ -227,27 +228,93 @@
             color: #2a3fbc;
         }
 
-        /* Botões */
+        /* Botões de ação */
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
         .btn {
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn i {
+            font-size: 16px;
+        }
+
+        .btn-primary {
             background-color: #2a3fbc;
             color: white;
         }
 
-        .btn i {
-            margin-right: 5px;
+        .btn-primary:hover {
+            background-color: #1e2b3f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 63, 188, 0.3);
         }
 
-        .btn:hover {
-            background-color: #1e2b3f;
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideInRight 0.3s;
+            z-index: 1001;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         @media print {
-            .menu, .logout-btn, .page-title i, .btn {
+            .menu, .logout-btn, .page-title i, .action-buttons, .toast {
                 display: none;
             }
 
@@ -259,16 +326,6 @@
             @page {
                 margin: 1.5cm;
                 size: A4;
-            }
-
-            @page :first {
-                margin-top: 1.5cm;
-            }
-
-            @page {
-                @top-center { content: "" }
-                @bottom-center { content: "" }
-                @bottom-right { content: "" }
             }
 
             a[href]:after {
@@ -301,7 +358,7 @@
         <h1>Boletim Escolar</h1>
     </div>
 
-    <div class="boletim-container">
+    <div class="boletim-container" id="boletimParaImagem">
         <div class="cabecalho-boletim">
             <h2>Boletim do Aluno</h2>
             <p>Ano Letivo 2026</p>
@@ -374,13 +431,57 @@
             <div class="valor"><%= request.getAttribute("mediaGeral") %></div>
         </div>
         <% } %>
+    </div>
 
-        <div style="margin-top: 30px; text-align: right;">
-            <button onclick="window.print()" class="btn">
-                <i class="fas fa-print"></i> Imprimir Boletim
-            </button>
-        </div>
+    <!-- Botões de ação - APENAS BAIXAR IMAGEM e IMPRIMIR -->
+    <div class="action-buttons">
+        <button onclick="baixarImagem()" class="btn btn-success">
+            <i class="fas fa-download"></i> Baixar Boletim
+        </button>
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="fas fa-print"></i> Imprimir
+        </button>
     </div>
 </div>
+
+<!-- Toast de notificação -->
+<div id="toast" class="toast">
+    <i class="fas fa-check-circle"></i> <span id="toastMessage"></span>
+</div>
+
+<script>
+    // Função para baixar imagem (ORIGINAL)
+    function baixarImagem() {
+        mostrarToast('📸 Gerando imagem para download...');
+
+        html2canvas(document.getElementById('boletimParaImagem'), {
+            scale: 2, // Qualidade alta
+            backgroundColor: '#ffffff',
+            logging: false
+        }).then(canvas => {
+            // Cria link para download
+            const link = document.createElement('a');
+            link.download = 'boletim-${aluno.nome}.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            mostrarToast('Imagem baixada com sucesso!');
+        }).catch(erro => {
+            console.error('Erro ao baixar:', erro);
+            mostrarToast('Erro ao gerar imagem');
+        });
+    }
+
+    // Função para mostrar toast
+    function mostrarToast(mensagem) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toastMessage').textContent = mensagem;
+        toast.style.display = 'block';
+
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3000);
+    }
+</script>
 </body>
 </html>
