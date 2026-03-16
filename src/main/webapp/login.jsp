@@ -9,7 +9,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Login -EscolApp</title>
-    <link rel="icon" href="../WEB-INF/assets/images/logo_escolApp.png">
+    <link rel="icon" href="fotos/logo_escolApp.png">
 
     <style>
         :root {
@@ -474,13 +474,13 @@ text-align:center;
     <div class="toggle-container">
         <div class="toggle">
             <div class="toggle-panel toggle-left">
-                <img src="${pageContext.request.contextPath}/imgs/logo_escolApp.png" alt="logo" style="width: 9rem;">
+                <img src="${pageContext.request.contextPath}/fotos/logo_escolApp.png" alt="logo" style="width: 9rem;">
                 <h1>Já possui uma conta?</h1>
                 <p>Entre com suas informações para ter acesso aos seus dados</p>
                 <button class="hidden" id="login">Entrar</button>
             </div>
             <div class="toggle-panel toggle-right">
-                <img src="${pageContext.request.contextPath}/imgs/logo_escolApp.png" alt="logo" style="width: 9rem;">
+                <img src="${pageContext.request.contextPath}/fotos/logo_escolApp.png" alt="logo" style="width: 9rem;">
                 <h1>Olá!! não possui conta?</h1>
                 <p>Cadastre-se como aluno</p>
                 <button class="hidden" id="register">Cadastrar</button>
