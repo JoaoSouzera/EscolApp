@@ -205,7 +205,7 @@ public class AdmServlet extends HttpServlet {
 
         if (username != null) atualizado |= dao.atualizarUsername(id, username);
         if (email != null) atualizado |= dao.atualizarEmail(id, email);
-        if (senha != null && !senha.isEmpty()) atualizado |= dao.atualizarSenha(id, senha);
+        if (senha != null && !senha.isEmpty()) atualizado |= dao.atualizarSenhaID(id, senha);
 
         if (atualizado){ // FEEDBACK DA AÇÃO
             request.getSession().setAttribute("msg", "Administrador atualizado com sucesso!");

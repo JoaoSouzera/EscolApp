@@ -81,6 +81,36 @@ public class AdmDAO {
         return adm;
     }
 
+    public Adm buscarPorUserUnico(String username) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        Adm adm = null;
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ADM WHERE USERNAME = ?");
+            pstmt.setString(1, username);
+            ResultSet rset = pstmt.executeQuery();
+
+            if (rset.next()) {
+                adm = new Adm(
+                        rset.getInt("ID"),
+                        rset.getString("USERNAME"),
+                        rset.getString("EMAIL"),
+                        rset.getString("SENHA")
+                );
+            }
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conexao.desconectar(conn);
+        }
+
+        return adm;
+    }
+
     // UPDATE
 
     public boolean atualizarUsername(int num, String username){
@@ -123,7 +153,7 @@ public class AdmDAO {
             conexao.desconectar(conn);
         }
     }
-    public boolean atualizarSenha(int num, String senha){
+    public boolean atualizarSenhaID(int num, String senha){
         Conexao conexao = new Conexao();
         Connection conn = null;
         try{
@@ -143,6 +173,35 @@ public class AdmDAO {
             conexao.desconectar(conn);
         }
     }
+
+
+    public int atualizarSenha(Adm adm, String senha) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE ADM SET SENHA = ? WHERE ID = ?");
+
+            pstmt.setString(1, senha);
+            pstmt.setInt(2, adm.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1; // Sucesso
+            } else {
+                return 0; // Nenhuma linha afetada
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return -1; // Erro SQL
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Erro geral
+        } finally {
+            conexao.desconectar(conn);
+        }
+    }
+
+
     // DELETE
     public boolean removerAdm(int num){
         Conexao conexao = new Conexao();

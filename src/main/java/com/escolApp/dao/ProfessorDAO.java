@@ -2,6 +2,7 @@ package com.escolApp.dao;
 
 import com.escolApp.conexao.Conexao;
 import com.escolApp.model.Adm;
+import com.escolApp.model.Aluno;
 import com.escolApp.model.Professor;
 
 import java.sql.*;
@@ -56,6 +57,40 @@ public class ProfessorDAO {
         }
         return null;
     }
+
+    public Professor buscarPorUserUnico(String username) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        Professor professor = null;
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM PROFESSOR WHERE USERNAME = ?");
+            pstmt.setString(1, username);
+            ResultSet rset = pstmt.executeQuery();
+
+            if (rset.next()) {
+                professor = new Professor(
+                        rset.getInt("ID"),
+                        rset.getString("NOME"),
+                        rset.getString("USERNAME"),
+                        rset.getString("EMAIL"),
+                        rset.getString("SENHA"),
+                        rset.getInt("ID_DISCIPLINA")
+                );
+            }
+
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conexao.desconectar(conn);
+        }
+
+        return professor;
+    }
+
+
     // UPDATE
     public boolean alterarSenha (int num, String senha){ //TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();
@@ -76,6 +111,34 @@ public class ProfessorDAO {
             conexao.desconectar(conexao.conectar());
         }
     }
+
+    //Método diferente para outro uso, na recuperação de senha
+    public int atualizarSenha(Professor professor, String senha) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE PROFESSOR SET SENHA = ? WHERE ID = ?");
+
+            pstmt.setString(1, senha);
+            pstmt.setInt(2, professor.getId());
+
+            if (pstmt.executeUpdate() > 0) {
+                return 1; // Sucesso
+            } else {
+                return 0; // Nenhuma linha afetada
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+            return -1; // Erro SQL
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1; // Erro geral
+        } finally {
+            conexao.desconectar(conn);
+        }
+    }
+
     // DELETE
     public boolean removerProfessor(int num){ // TESTADO! FUNCIONANDO...
         Conexao conexao = new Conexao();

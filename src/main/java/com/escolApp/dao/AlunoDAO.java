@@ -419,6 +419,38 @@ public class AlunoDAO {
         }
     }
 
+    public Aluno buscarPorUserUnico(String username) {
+        Conexao conexao = new Conexao();
+        Connection conn = conexao.conectar();
+        Aluno aluno = null;
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ALUNO WHERE USERNAME = ?");
+            pstmt.setString(1, username);
+            ResultSet rset = pstmt.executeQuery();
+
+            if (rset.next()) { // Usa if em vez de while (username é único)
+                aluno = new Aluno(
+                        rset.getInt("ID"),
+                        rset.getString("MATRICULA"),
+                        rset.getString("NOME"),
+                        rset.getString("USERNAME"),
+                        rset.getString("EMAIL"),
+                        rset.getString("SENHA")
+                );
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conexao.desconectar(conn);
+        }
+
+        return aluno;
+    }
+
+
     public Aluno autenticar(String username, String senha) {
         Conexao conexao = new Conexao();
         Aluno aluno = null;
@@ -456,5 +488,7 @@ public class AlunoDAO {
             return null;
         }
     }
+
+
 
 }
