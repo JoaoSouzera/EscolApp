@@ -6,9 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boletim - Sistema Escolar</title>
+    <title>Boletim - EscolApp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" href="../../../imgs/logo_escolApp.png">
+    <link rel="icon" href="../../../fotos/logo_escolApp.png">
     <style>
         * {
             margin: 0;
@@ -217,6 +217,41 @@
                 margin-left: 0;
                 width: 100%;
             }
+
+            /* ADICIONE ISSO */
+            @media print {
+                @page {
+                    margin: 1.5cm;
+                    size: A4;
+                }
+
+                /* Remove URL do PDF */
+                @page :first {
+                    margin-top: 1.5cm;
+                }
+
+                /* Remove cabeçalho e rodapé do navegador */
+                @page {
+                    @top-center { content: "" }
+                    @bottom-center { content: "" }
+                    @bottom-right { content: "" }
+                }
+
+                /* Remove URLs de links */
+                a[href]:after {
+                    content: none !important;
+                }
+
+                /* Seus estilos de impressão existentes */
+                .sidebar, .menu-item.logout, .page-title i {
+                    display: none;
+                }
+
+                .main-content {
+                    margin-left: 0;
+                    width: 100%;
+                }
+            }
         }
     </style>
 </head>
@@ -256,7 +291,7 @@
     <div class="boletim-container">
         <div class="cabecalho-boletim">
             <h2>Boletim do Aluno</h2>
-            <p>Ano Letivo 2024</p>
+            <p>Ano Letivo 2026</p>
         </div>
 
         <div class="info-aluno">
